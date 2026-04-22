@@ -24,6 +24,38 @@ iOS Human Interface Guidelines patterns for layout, typography, color, accessibi
 
 ### Layout and Spacing
 
+#### Spacing Grid
+
+Omit `spacing:` on stacks to get SwiftUI's adaptive default. Only specify an explicit value when you need a deliberate departure from the default — and when you do, stick to the 4pt grid below.
+
+This is a common design convention, not an Apple-prescribed system, but it keeps layouts visually coherent. Avoid inventing values between grid stops.
+
+| Points | Token | Typical use |
+|--------|-------|-------------|
+| 4 | `.xxSmall` | Tight icon-to-label padding, inline badge offsets |
+| 8 | `.xSmall` | Related elements within a group, compact stack gaps |
+| 12 | `.small` | List row internal padding, label-to-secondary-text |
+| 16 | `.medium` | Standard margin, default section gap |
+| 20 | `.mediumLarge` | Comfortable breathing room between distinct controls |
+| 24 | `.large` | Section separators, card internal padding |
+| 32 | `.xLarge` | Major groupings, header-to-content gap |
+| 40 | `.xxLarge` | Large section breaks |
+| 48 | `.xxxLarge` | Hero/splash spacing, onboarding screens |
+
+```swift
+enum Spacing {
+    static let xxSmall: CGFloat = 4
+    static let xSmall: CGFloat = 8
+    static let small: CGFloat = 12
+    static let medium: CGFloat = 16
+    static let mediumLarge: CGFloat = 20
+    static let large: CGFloat = 24
+    static let xLarge: CGFloat = 32
+    static let xxLarge: CGFloat = 40
+    static let xxxLarge: CGFloat = 48
+}
+```
+
 #### Standard Margins
 
 ```swift
@@ -41,7 +73,7 @@ extension EdgeInsets {
 
 ```swift
 ScrollView {
-    LazyVStack(spacing: 16) {
+    LazyVStack {
         ForEach(items) { item in
             ItemRow(item: item)
         }
@@ -219,7 +251,7 @@ See the Haptics section below for structured patterns.
 #### VoiceOver Support
 
 ```swift
-VStack(alignment: .leading, spacing: 8) {
+VStack(alignment: .leading) {
     Text(item.title).font(.headline)
     Text(item.subtitle).font(.subheadline).foregroundStyle(.secondary)
     HStack {
@@ -243,7 +275,7 @@ Adapt layout for accessibility sizes:
 
 var body: some View {
     if dynamicTypeSize.isAccessibilitySize {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading) {
             leadingContent
             trailingContent
         }

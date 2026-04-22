@@ -8,6 +8,7 @@ A comprehensive mapping of deprecated-to-modern SwiftUI and iOS APIs from iOS 15
 - ObservableObject / @Published / @StateObject to @Observable / @State
 - @ObservedObject to let / @Bindable
 - @EnvironmentObject to @Environment
+- foregroundColor to foregroundStyle
 - .onChange single-value to two-value
 - ActionSheet to confirmationDialog
 - Alert (Legacy) to modern .alert
@@ -319,6 +320,45 @@ struct ContentView: View {
     }
 }
 ```
+
+---
+
+## foregroundColor(_:) to foregroundStyle(_:)
+
+`foregroundColor(_:)` was deprecated in iOS 17. Its replacement, `foregroundStyle(_:)`, accepts any `ShapeStyle` -- not just `Color` -- enabling gradients, hierarchical styles, and materials directly.
+
+### Before (Deprecated)
+
+```swift
+Text("Hello")
+    .foregroundColor(.red)
+
+Text("Secondary")
+    .foregroundColor(.secondary)
+```
+
+### After (Modern)
+
+```swift
+Text("Hello")
+    .foregroundStyle(.red)
+
+Text("Secondary")
+    .foregroundStyle(.secondary)
+
+// Gradient -- not possible with foregroundColor
+Text("Gradient")
+    .foregroundStyle(
+        .linearGradient(colors: [.blue, .purple],
+                        startPoint: .leading, endPoint: .trailing)
+    )
+```
+
+### Migration Notes
+
+`foregroundStyle(_:)` is a drop-in replacement when passing a `Color`. The broader `ShapeStyle` conformance also accepts gradients, `.tint`, `.selection`, and hierarchical styles (`.primary`, `.secondary`, `.tertiary`, `.quaternary`). Multi-level variants `foregroundStyle(_:_:)` and `foregroundStyle(_:_:_:)` set hierarchical styles for child content in one call.
+
+**Not to be confused with** `NSAttributedString.Key.foregroundColor` -- that is a UIKit/Foundation attributed-string key used for Core Text, `NSAttributedString`, and PDF rendering. It is not deprecated and has no SwiftUI equivalent.
 
 ---
 
@@ -963,10 +1003,13 @@ func display(_ view: some View) { ... }
 @State private var selectedItem: Item?
 @State private var showingSheet = false
 
-.onTapGesture {
+Button {
     selectedItem = item
     showingSheet = true
+} label: {
+    ItemRow(item: item)
 }
+.buttonStyle(.plain)
 .sheet(isPresented: $showingSheet) {
     if let item = selectedItem {
         DetailView(item: item)
@@ -979,9 +1022,12 @@ func display(_ view: some View) { ... }
 ```swift
 @State private var selectedItem: Item?
 
-.onTapGesture {
+Button {
     selectedItem = item
+} label: {
+    ItemRow(item: item)
 }
+.buttonStyle(.plain)
 .sheet(item: $selectedItem) { item in
     DetailView(item: item)
 }

@@ -178,7 +178,7 @@ var body: some View {
 }
 
 private var header: some View {
-    VStack(alignment: .leading, spacing: 6) {
+    VStack(alignment: .leading) {
         Text(title).font(.title2)
         Text(subtitle).font(.subheadline)
     }
@@ -209,7 +209,7 @@ struct CardStyle: ViewModifier {
         content
             .padding()
             .background(.background)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(.rect(cornerRadius: 12))
             .shadow(radius: 2)
     }
 }
@@ -303,6 +303,7 @@ Follow Apple Human Interface Guidelines for layout, typography, color, and acces
 - Use semantic colors (`Color.primary`, `.secondary`, `Color(uiColor: .systemBackground)`) for automatic light/dark mode
 - Use system font styles (`.title`, `.headline`, `.body`, `.caption`) for Dynamic Type support
 - Use `ContentUnavailableView` for empty and error states
+- Omit `spacing:` on stacks unless a specific value is required — `nil` (the default) uses platform-appropriate adaptive spacing
 - Support adaptive layouts via `horizontalSizeClass`
 - Provide VoiceOver labels (`.accessibilityLabel`) and support Dynamic Type accessibility sizes by switching layout orientation
 
@@ -340,9 +341,31 @@ TextField("Search…", text: $query)
 6. Over-using `@State` -- only for view-local state; shared state belongs in `@Observable`
 7. Not extracting subviews -- long body blocks are hard to read and optimize
 8. Using `NavigationView` -- deprecated; use `NavigationStack`
-9. Inline closures in body -- extract complex closures to methods
-10. `.sheet(isPresented:)` when state represents a model -- use `.sheet(item:)` instead
-11. **Using `AnyView` for type erasure** -- causes identity resets and disables diffing. Use `@ViewBuilder`, `Group`, or generics instead. See [references/deprecated-migration.md](references/deprecated-migration.md)
+9. Using `foregroundColor(_:)` -- deprecated in iOS 17; use `foregroundStyle(_:)`
+10. Inline closures in body -- extract complex closures to methods
+11. `.sheet(isPresented:)` when state represents a model -- use `.sheet(item:)` instead
+12. **Using `AnyView` for type erasure** -- causes identity resets and disables diffing. Use `@ViewBuilder`, `Group`, or generics instead. See [references/deprecated-migration.md](references/deprecated-migration.md)
+13. **Putting `@AppStorage` inside an `@Observable` class** -- `@AppStorage` is a SwiftUI `DynamicProperty`; it only triggers view updates when used directly in a `View`. Inside an `@Observable` class, observation tracking never sees the change. Keep `@AppStorage` in views, or read/write `UserDefaults` directly inside the `@Observable` class:
+
+```swift
+// Wrong -- @AppStorage is invisible to @Observable tracking
+@MainActor @Observable final class Settings {
+    @AppStorage("theme") var theme: String = "system" // view won't update
+}
+
+// Right -- UserDefaults read/write with a normal stored property
+@MainActor @Observable final class Settings {
+    var theme: String {
+        didSet { UserDefaults.standard.set(theme, forKey: "theme") }
+    }
+
+    init() {
+        theme = UserDefaults.standard.string(forKey: "theme") ?? "system"
+    }
+}
+```
+
+14. Hard-coding `spacing:` on every stack -- omit it to get adaptive platform spacing; only specify when the value is intentional
 
 ## Review Checklist
 
@@ -355,12 +378,14 @@ TextField("Search…", text: $query)
 - [ ] Views decomposed into focused subviews
 - [ ] No heavy computation in view `body`
 - [ ] Environment used for deeply shared state
+- [ ] `foregroundStyle(_:)` used instead of deprecated `foregroundColor(_:)`
 - [ ] Custom `ViewModifier` for repeated styling
 - [ ] `.sheet(item:)` preferred over `.sheet(isPresented:)`
 - [ ] Sheets own their actions and call `dismiss()` internally
 - [ ] MV pattern followed -- no unnecessary view models
 - [ ] `@Observable` view model classes are `@MainActor`-isolated
 - [ ] Model types passed across concurrency boundaries are `Sendable`
+- [ ] Stack `spacing:` omitted unless a specific value is required (prefer adaptive default)
 
 ## References
 
