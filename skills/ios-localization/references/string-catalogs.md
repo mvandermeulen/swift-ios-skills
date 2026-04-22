@@ -13,6 +13,7 @@
 - [Device Variations](#device-variations)
 - [Exporting for Translators (XLIFF / xcloc)](#exporting-for-translators-xliff-xcloc)
 - [String Catalog JSON Structure](#string-catalog-json-structure)
+- [Generated Localizable Symbols (Xcode 26+)](#generated-localizable-symbols-xcode-26)
 - [Testing Strategies](#testing-strategies)
 - [Migration from .strings / .stringsdict](#migration-from-strings-stringsdict)
 - [Best Practices](#best-practices)
@@ -90,7 +91,7 @@ Open the `.xcstrings` file in Xcode to use the visual editor:
 
 ### Key naming conventions
 
-Use structured key names for large projects:
+For manually-managed strings, use stable symbol-style keys rather than English text as the key. This prevents silent localization breaks when UI copy changes (a typo or rewording just creates a new key and stales the old one — no compiler error). With Xcode 26's generated symbols, stable keys also produce readable, predictable Swift accessors.
 
 ```text
 onboarding.welcome.title        -> "Welcome"
@@ -100,7 +101,15 @@ error.network.title             -> "Connection Error"
 error.network.message           -> "Check your internet and try again"
 ```
 
-For SwiftUI, the literal text IS the key by default. Use `String(localized:defaultValue:)` when you want a structured key that differs from the English text.
+Use `String(localized:defaultValue:)` when you want a structured key that differs from the English text:
+
+```swift
+let title = String(localized: "error.network.title",
+                   defaultValue: "Connection Error",
+                   comment: "Title for network error alert")
+```
+
+For SwiftUI auto-extracted strings, the literal text IS the key by default. This is fine for simple views. For any string you manage manually — shared keys, keys referenced across modules, or keys where copy changes frequently — use a stable key instead.
 
 ## Handling Strings in Non-SwiftUI Code
 
@@ -315,6 +324,18 @@ The `.xcstrings` file is JSON. Understanding the structure enables programmatic 
         }
       }
     },
+    "room_available": {
+      "comment": "Button label on room search results",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Book this room"
+          }
+        }
+      }
+    },
     "%lld items": {
       "localizations": {
         "en": {
@@ -341,11 +362,87 @@ The `.xcstrings` file is JSON. Understanding the structure enables programmatic 
 }
 ```
 
+Note the `"room_available"` key above: it uses `"extractionState": "manual"` and a stable symbol-style key with the English text in `"value"`, not in the key itself. This is the pattern that enables generated symbols in Xcode 26+.
+
 ### Translation states
 - `"new"` -- Xcode extracted the key but no translation exists
 - `"translated"` -- Translation provided
 - `"needs_review"` -- Marked for review (source string changed or manual flag)
 - `"stale"` -- Key no longer found in code (removed on next clean build)
+
+### Extraction states
+
+The `extractionState` field (separate from translation `state`) tracks how a key entered the catalog:
+
+| Value | Meaning |
+|-------|---------|
+| `extracted_with_value` | Xcode found the string in source code and extracted it automatically |
+| `manual` | Added by hand via the (+) button — not discovered from code. Xcode will never update or remove manual keys during build sync |
+| `stale` | Previously extracted from code, but Xcode can no longer find it. Orphaned translations still exist |
+| `migrated` | Converted from a legacy `.strings` or `.stringsdict` file |
+
+The `manual` state is significant: manual keys have the **Generate Swift Symbol** checkbox enabled by default, so they automatically produce compiler-checked `LocalizedStringResource` accessors when the build setting is on. Auto-extracted keys can also generate symbols — enable the checkbox per-key or use Refactor > Convert Strings to Symbols.
+
+## Generated Localizable Symbols (Xcode 26+)
+
+Xcode 26 generates type-safe Swift symbols from String Catalog keys, replacing stringly-typed localization access with compiler-checked `LocalizedStringResource` properties and functions.
+
+### Enabling symbol generation
+
+1. Build Settings > Localization > **Generate String Catalog Symbols** → `Yes` (on by default in new Xcode 26 projects)
+2. The catalog must use format version `"1.1"` — Xcode 26 writes this automatically when symbol generation metadata is present
+3. Each key has a **Generate Swift Symbol** checkbox in the String Catalog editor. Manual keys (added via the (+) button) have this enabled by default. Auto-extracted keys can opt in via Refactor > Convert Strings to Symbols, which enables the checkbox
+
+### How Xcode derives symbol names
+
+Xcode camelCases the key name, lowercasing the first segment:
+
+| Catalog key | Generated symbol |
+|-------------|-----------------|
+| `room_available` | `.roomAvailable` |
+| `settings.notifications.toggle` | `.settingsNotificationsToggle` |
+| `TITLE` | `.title` |
+
+Keys with format specifiers become functions. Use named placeholders `%(name)lld` for descriptive argument labels; bare `%lld` produces generic labels:
+
+| Catalog key | Format | Generated symbol |
+|-------------|--------|-----------------|
+| `landmarks_count` | `%(count)lld` | `.landmarksCount(count: Int)` |
+| `greeting` | `%@` | `.greeting(_ param1: String)` |
+
+You can rename parameters during refactoring for more descriptive signatures.
+
+### Using generated symbols
+
+```swift
+// Simple key — static property
+Text(.roomAvailable)
+
+// Parameterized key — function
+Text(.landmarksCount(count: 42))
+
+// Non-default table (Booking.xcstrings)
+Text(.Booking.confirmBookingCta)
+
+// In non-SwiftUI code
+let title = String(localized: .roomAvailable)
+let attributed = AttributedString(localized: .greeting(userName))
+```
+
+Code completion supports generated symbols — type `.` and choose from the menu.
+
+### Refactoring existing strings to symbols
+
+Select one or more keys in the String Catalog editor, Control-click, and choose **Refactor > Convert Strings to Symbols**. Xcode replaces string literal usage in code with the generated symbol. This is reversible via **Convert Symbols to Strings**.
+
+### Cross-module limitations
+
+Generated symbols are declared `internal`. Code in other modules cannot access them directly. Default to a public wrapper; reach for `xcstrings-tool` if the wrapper becomes unwieldy across many modules:
+
+- **Public wrapper** (default): Create a public extension on `LocalizedStringResource` that delegates to the internal symbols
+- **[xcstrings-tool](https://github.com/liamnichols/xcstrings-tool)**: A Swift Package Plugin that generates public constants from `.xcstrings` files — use this for heavier multi-module setups where maintaining manual wrappers becomes tedious
+
+For Swift Packages, the generated symbols use the `.module` bundle automatically. The `internal` visibility means only code within the same package target can reference them.
 
 ## Testing Strategies
 
@@ -460,3 +557,4 @@ String Catalogs and `.strings` files can coexist in the same target during migra
 5. **Automate coverage checks** -- integrate translation-coverage validation in CI to catch missing translations before release.
 6. **Export regularly** -- send updated `.xcloc` bundles to translators after each sprint or feature merge.
 7. **Test with pseudolocalizations in CI** -- run UI tests with double-length and RTL pseudo-languages to catch layout issues early.
+8. **Prefer stable keys with generated symbols** -- for manually-managed strings, use symbol-style keys and enable Generate String Catalog Symbols to get compile-time safety and autocompletion.

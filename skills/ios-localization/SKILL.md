@@ -1,6 +1,6 @@
 ---
 name: ios-localization
-description: "Implement, review, or improve localization and internationalization in iOS/macOS apps — String Catalogs (.xcstrings), LocalizedStringKey, LocalizedStringResource, pluralization, FormatStyle for numbers/dates/measurements, right-to-left layout, Dynamic Type, and locale-aware formatting. Use when adding multi-language support, setting up String Catalogs, handling plural forms, formatting dates/numbers/currencies for different locales, testing localizations, or making UI work correctly in RTL languages like Arabic and Hebrew."
+description: "Implement, review, or improve localization and internationalization in iOS/macOS apps — String Catalogs (.xcstrings), generated localizable symbols, stable key naming, LocalizedStringKey, LocalizedStringResource, pluralization, FormatStyle for numbers/dates/measurements, right-to-left layout, Dynamic Type, and locale-aware formatting. Use when adding multi-language support, setting up String Catalogs, enabling generated symbols for compile-time-safe localization keys, handling plural forms, formatting dates/numbers/currencies for different locales, testing localizations, or making UI work correctly in RTL languages like Arabic and Hebrew."
 ---
 
 # iOS Localization & Internationalization
@@ -10,6 +10,7 @@ Localize iOS 26+ apps using String Catalogs, modern string types, FormatStyle, a
 ## Contents
 
 - [String Catalogs (.xcstrings)](#string-catalogs-xcstrings)
+- [Generated Localizable Symbols (Xcode 26+)](#generated-localizable-symbols-xcode-26)
 - [String Types -- Decision Guide](#string-types-decision-guide)
 - [String Interpolation in Localized Strings](#string-interpolation-in-localized-strings)
 - [Pluralization](#pluralization)
@@ -50,6 +51,31 @@ let msg = "Hello"                 // just a String, invisible to Xcode
 Xcode adds discovered keys to the String Catalog automatically. Mark translations as Needs Review, Translated, or Stale in the editor.
 
 For detailed String Catalog workflows, migration, and testing strategies, see [references/string-catalogs.md](references/string-catalogs.md).
+
+## Generated Localizable Symbols (Xcode 26+)
+
+Xcode 26 can generate type-safe `LocalizedStringResource` symbols from String Catalog keys, replacing stringly-typed localization with compiler-checked access.
+
+**Enable:** Build Settings > Localization > Generate String Catalog Symbols → `Yes` (on by default in new Xcode 26 projects). Requires catalog format version `1.1`.
+
+**Workflow:** Add a key manually via the (+) button in the String Catalog editor — manual keys have the **Generate Swift Symbol** checkbox enabled by default. Auto-extracted keys can also opt in via Refactor > Convert Strings to Symbols. Use stable symbol-style key names — not English text — so renaming UI copy never breaks code references.
+
+```swift
+// Generated from key "room_available" in Localizable.xcstrings
+Text(.roomAvailable)
+
+// Parameterized key "landmarks_count" with %(count)lld
+Text(.landmarksCount(count: 42))
+
+// Non-default table "Booking.xcstrings"
+Text(.Booking.confirmBookingCta)
+```
+
+Xcode derives symbol names by camelCasing the key: `settings.notifications.toggle` → `.settingsNotificationsToggle`. You can convert existing extracted strings to symbols via Refactor > Convert Strings to Symbols (reversible).
+
+Generated symbols are `internal`. For cross-module access, create a public wrapper extension. For heavier multi-module setups, use [xcstrings-tool](https://github.com/liamnichols/xcstrings-tool) instead.
+
+For the full generated symbols reference — extraction states, symbol derivation rules, and cross-module patterns — see [references/string-catalogs.md](references/string-catalogs.md).
 
 ## String Types -- Decision Guide
 
@@ -387,6 +413,20 @@ let errorMessage = LocalizedStringResource("Something went wrong")
 showAlert(message: String(localized: errorMessage))
 ```
 
+### DON'T: Use natural-language text as the key for manually-managed strings
+```swift
+// WRONG -- typo silently creates a new key, stales the old one, no compiler error
+Text("Wlecome Back")  // was "Welcome Back" -- silent localization break
+```
+
+### DO: Use stable symbol-style keys and enable generated symbols
+```swift
+// CORRECT -- key is stable; UI text lives in the catalog's default value
+Text(.welcomeBack)  // generated from key "welcome_back" in String Catalog
+// Or without generated symbols:
+String(localized: "welcome_back", defaultValue: "Welcome Back")
+```
+
 ### DON'T: Skip pseudolocalization testing
 Testing only in English hides truncation, layout, and RTL bugs.
 
@@ -409,6 +449,8 @@ Use Xcode scheme settings to override the app language without changing device l
 - [ ] `@ScaledMetric` used for spacing that must scale with Dynamic Type
 - [ ] Currency formatting uses explicit currency code, not locale default
 - [ ] Pseudolocalization tested (accented, right-to-left, double-length)
+- [ ] Manually-managed keys use stable symbol-style names, not English text as the key
+- [ ] Generate String Catalog Symbols enabled for targets with manually-managed keys
 - [ ] Ensure localized string types are Sendable; use @MainActor for locale-change UI updates
 
 ## References
