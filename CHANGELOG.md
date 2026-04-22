@@ -1,5 +1,51 @@
 # Changelog
 
+## Unreleased
+
+### New skills
+
+- `app-store-optimization` -- ASO keyword strategy, title/subtitle optimization, description writing, screenshot captions, Custom Product Pages, in-app events, product page A/B testing
+- `ios-simulator` -- xcrun simctl device lifecycle, push/location/permission simulation, log streaming, status bar overrides, screenshot/video capture, compile-time simulator detection, simulator limitations
+- `swift-api-design-guidelines` -- Swift API Design Guidelines for argument labels, mutating/nonmutating pairs, side-effect naming, documentation comments, O(1) complexity rule, conventions
+
+### Skill updates
+
+- `ios-security` -- Replaced with `swift-security`, vendored from [ivan-magda/swift-security-skill](https://github.com/ivan-magda/swift-security-skill) by [Ivan Magda](https://github.com/ivan-magda). Deeper coverage of Keychain, CryptoKit, biometrics, Secure Enclave, OWASP compliance (14 reference files). Local fixes: corrected SHA-3 availability (iOS 26, not iOS 18), fixed `isValidSignature` parameter labels, fixed `evaluatedPolicyDomainState` typo, added `## Contents` section, converted references to markdown links, promoted Common Mistakes to H2. Migrated ATS and file storage content to `ios-networking`.
+- `ios-accessibility` -- Add Voice Control, Switch Control, and Full Keyboard Access patterns to SKILL.md and a11y-patterns.md reference.
+- `ios-localization` -- Add legacy formatter migration table to formatstyle-locale.md reference. Add "Generated Localizable Symbols (Xcode 26+)" section to SKILL.md and string-catalogs.md. Update description frontmatter. Improve stable key naming guidance for preventing silent localization breaks.
+- `ios-networking` -- Add "App Transport Security (ATS)" section migrated from ios-security.
+- `swiftui-patterns`, `swiftui-layout-components` -- Add "prefer adaptive spacing" rule to Common Mistakes and Review Checklist. Add HIG alignment guidance to prefer omitting `spacing:` on stacks (uses platform-adaptive default). Update design-polish.md spacing section with introductory guidance.
+- `swiftui-patterns` -- Add "When a New ViewModel Is Justified" and "Environment vs. Initializer Injection" sections to architecture-patterns.md. Add modern `@Observable` ViewModel example with `@State` owner and `@Bindable` child pattern.
+- `swiftui-patterns` -- Add `foregroundColor(_:)` to `foregroundStyle(_:)` migration entry in deprecated-migration.md with before/after examples.
+- `swiftui-gestures` -- Add Common Mistake #6: `onTapGesture` for actions that should use `Button`. Add corresponding Review Checklist item.
+- `widgetkit` -- Add "Design Patterns" section to SKILL.md and widgetkit-advanced.md: prefer `Gauge` for value indicators, `containerBackground(_:for: .widget)` for backgrounds, `Canvas` for dense visualizations, match timeline refresh to data granularity. Consolidate widget families table. Simplify Live Activity example.
+- `device-integrity` -- Fix App Attest retry logic: guard final-attempt sleep, use modern `Task.sleep(for:)` API.
+- `energykit` -- Remove unnecessary `MainActor.run` wrapping in energykit-patterns.md (already on MainActor), modernize retry loop and use `Task.sleep(for:)` API.
+
+### Code example improvements
+
+- Remove ~50 unnecessary hard-coded `spacing:` and `.padding(.direction, N)` values from code examples across 34 skill files. Examples now model the best practice of omitting spacing for adaptive platform defaults. Justified values retained: `spacing: 0` (zero-gap), tight grid gutters (2–4pt), chart API parameters, glass container API, and localization RTL demos.
+- Replace `onTapGesture` with `Button` + `.buttonStyle(.plain)` for single-tap actions across natural-language, swiftui-animation, core-animation-bridge, and deprecated-migration code examples. Improves VoiceOver, Voice Control, Switch Control, and keyboard accessibility.
+- Modernize `.clipShape(RoundedRectangle(cornerRadius:))` to `.clipShape(.rect(cornerRadius:))` shorthand across core-animation-bridge, hosting-migration, representable-recipes, and image-loading-caching.
+
+### Bundle changes
+
+- Add `app-store-optimization` to `ios-engineering-skills` and `all-ios-skills` bundles.
+- Add `ios-simulator` to `ios-engineering-skills` and `all-ios-skills` bundles.
+- Add `swift-api-design-guidelines` to `swift-core-skills` and `all-ios-skills` bundles.
+- Update `all-ios-skills` count from 76 to 79.
+- Replace `ios-security` with `swift-security` in `ios-engineering-skills` and `all-ios-skills` bundles.
+
+### Repository
+
+- Add issue templates for skill requests, content bugs, and enhancements.
+- Add scripts for syncing and validating issue template dropdowns against marketplace.json.
+- Add auto-assign workflow for newly opened issues.
+- Update `actions/checkout` to v5 in CI workflows.
+- Add GitHub Sponsors support section to README.
+- Update skills CLI upgrade command in README.
+- Update platform badge in README.
+
 ## v3.1.0
 
 ### Swift 6.3 update
