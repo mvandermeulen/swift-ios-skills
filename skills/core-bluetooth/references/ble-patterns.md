@@ -177,7 +177,7 @@ struct HeartRateView: View {
         NavigationStack {
             Group {
                 if viewModel.isConnected {
-                    VStack(spacing: 20) {
+                    VStack {
                         Image(systemName: "heart.fill")
                             .font(.system(size: 60))
                             .foregroundStyle(.red)

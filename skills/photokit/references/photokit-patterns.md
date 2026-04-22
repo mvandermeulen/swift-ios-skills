@@ -104,13 +104,13 @@ struct MultiPhotoLoader: View {
             }
 
             ScrollView(.horizontal) {
-                LazyHStack(spacing: 8) {
+                LazyHStack {
                     ForEach(loadedImages.indices, id: \.self) { index in
                         Image(uiImage: loadedImages[index])
                             .resizable()
                             .scaledToFill()
                             .frame(width: 100, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipShape(.rect(cornerRadius: 8))
                     }
                 }
                 .padding(.horizontal)
@@ -478,7 +478,7 @@ struct PhotoGridItem: View {
             }
         }
         .frame(width: 100, height: 100)
-        .clipShape(RoundedRectangle(cornerRadius: 6))
+        .clipShape(.rect(cornerRadius: 6))
         .task {
             thumbnail = downsample(data: imageData, to: thumbnailSize)
         }

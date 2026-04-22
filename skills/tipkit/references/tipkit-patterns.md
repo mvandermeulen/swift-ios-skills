@@ -261,14 +261,14 @@ and actions.
 ```swift
 struct BrandedTipStyle: TipViewStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack(alignment: .top, spacing: 16) {
+        HStack(alignment: .top) {
             configuration.image?
                 .font(.system(size: 24))
                 .foregroundStyle(.white)
                 .frame(width: 44, height: 44)
                 .background(.blue.gradient, in: RoundedRectangle(cornerRadius: 10))
 
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading) {
                 configuration.title
                     .font(.headline)
 
@@ -277,7 +277,7 @@ struct BrandedTipStyle: TipViewStyle {
                     .foregroundStyle(.secondary)
 
                 if !configuration.actions.isEmpty {
-                    HStack(spacing: 12) {
+                    HStack {
                         ForEach(configuration.actions) { action in
                             Button(action: action.handler) {
                                 action.label
@@ -286,7 +286,7 @@ struct BrandedTipStyle: TipViewStyle {
                             .buttonStyle(.bordered)
                         }
                     }
-                    .padding(.top, 4)
+                    .padding(.top)
                 }
             }
         }
@@ -320,15 +320,15 @@ A stripped-down style for tips in tight layouts like toolbars or sidebars.
 ```swift
 struct CompactTipStyle: TipViewStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 8) {
+        HStack {
             configuration.image?
                 .foregroundStyle(.tint)
 
             configuration.title
                 .font(.caption.bold())
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+        .padding(.horizontal)
+        .padding(.vertical)
         .background(.tint.opacity(0.1), in: Capsule())
     }
 }
@@ -367,7 +367,7 @@ struct HomeView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             if let currentTip = tipGroup.currentTip {
                 TipView(currentTip) { action in
                     currentTip.invalidate(reason: .actionPerformed)

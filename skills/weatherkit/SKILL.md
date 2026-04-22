@@ -222,7 +222,7 @@ struct WeatherAttributionView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack {
             // Display the Apple Weather mark
             AsyncImage(url: markURL) { image in
                 image

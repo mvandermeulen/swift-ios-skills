@@ -524,7 +524,7 @@ struct MigrationResultView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             Image(systemName: result.succeeded ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .font(.system(size: 60))
                 .foregroundStyle(result.succeeded ? .green : .red)

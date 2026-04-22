@@ -332,7 +332,7 @@ Lazy stacks only create views for items currently visible on screen. Off-screen 
 
 ```swift
 ScrollView {
-    LazyVStack(spacing: 12) {
+    LazyVStack {
         ForEach(items) { item in
             ItemRow(item: item)
         }
@@ -354,7 +354,7 @@ Use lazy grids for multi-column layouts:
 let columns = [GridItem(.adaptive(minimum: 150))]
 
 ScrollView {
-    LazyVGrid(columns: columns, spacing: 16) {
+    LazyVGrid(columns: columns) {
         ForEach(photos) { photo in
             PhotoThumbnail(photo: photo)
         }
@@ -379,7 +379,7 @@ let fixedColumns = [
 | Always-visible content | `VStack` (no benefit to lazy) |
 | Scrollable lists | `LazyVStack` inside `ScrollView`, or `List` |
 
-**Important:** Do not nest `GeometryReader` inside lazy containers. It forces eager measurement and defeats lazy loading. Use `.onGeometryChange` (iOS 18+) instead.
+**Important:** Do not nest `GeometryReader` inside lazy containers. It forces eager measurement and defeats lazy loading. Use `.onGeometryChange` (iOS 16+) instead.
 
 ## State and Observation Optimization
 
@@ -457,7 +457,7 @@ Use computed properties on `@Observable` models to derive state without introduc
 
 1. **Profiling Debug builds.** Debug builds include extra runtime checks and disable optimizations, producing misleading perf data. Profile Release builds on a real device.
 2. **Observing an entire model when only one property is needed.** Break large `@Observable` models into focused ones, or use computed properties/closures to narrow observation scope.
-3. **Using `GeometryReader` inside ScrollView items.** GeometryReader forces eager sizing and defeats lazy loading. Prefer `.onGeometryChange` (iOS 18+) or measure outside the lazy container.
+3. **Using `GeometryReader` inside ScrollView items.** GeometryReader forces eager sizing and defeats lazy loading. Prefer `.onGeometryChange` (iOS 16+) or measure outside the lazy container.
 4. **Calling `DateFormatter()` or `NumberFormatter()` inside `body`.** These are expensive to create. Make them static or move them outside the view.
 5. **Animating non-equatable state.** If SwiftUI cannot determine equality, it redraws every frame. Conform state to `Equatable`, then use `.animation(_:value:)` for simple value-bound changes or `.animation(_:body:)` for narrower modifier-scoped implicit animation.
 6. **Large flat `List` without identifiers.** Use `id:` or make items `Identifiable` so SwiftUI can diff efficiently instead of rebuilding the entire list.

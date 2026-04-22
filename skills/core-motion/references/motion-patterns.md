@@ -64,7 +64,7 @@ struct TiltView: View {
     @State private var motionService = MotionService.shared
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             Circle()
                 .fill(.blue)
                 .frame(width: 60, height: 60)

@@ -182,7 +182,7 @@ struct DeliveryActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DeliveryAttributes.self) { context in
             // Lock Screen / StandBy / CarPlay / paired Mac content
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading) {
                 HStack {
                     Text(context.attributes.restaurantName)
                         .font(.headline)
@@ -207,7 +207,7 @@ struct DeliveryActivityWidget: Widget {
                     .font(.subheadline)
 
                     // Progress steps
-                    HStack(spacing: 12) {
+                    HStack {
                         ForEach(DeliveryStep.allCases, id: \.self) { step in
                             Image(systemName: step.icon)
                                 .foregroundStyle(
@@ -234,7 +234,7 @@ struct DeliveryActivityWidget: Widget {
                     Text(context.attributes.restaurantName).font(.headline)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    HStack(spacing: 12) {
+                    HStack {
                         ForEach(DeliveryStep.allCases, id: \.self) { step in
                             Image(systemName: step.icon)
                                 .foregroundStyle(

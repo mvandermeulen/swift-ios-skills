@@ -63,7 +63,7 @@ AsyncImage(url: imageURL, transaction: Transaction(animation: .easeIn(duration: 
     }
 }
 .frame(width: 200, height: 200)
-.clipShape(RoundedRectangle(cornerRadius: 12))
+.clipShape(.rect(cornerRadius: 12))
 ```
 
 ### Limitations

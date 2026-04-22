@@ -70,7 +70,7 @@ struct MultiPhotoPicker: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: 100, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .clipShape(.rect(cornerRadius: 8))
                     }
                 }
             }
@@ -366,7 +366,7 @@ struct CameraScreen: View {
                     .frame(width: 72, height: 72)
                     .overlay(Circle().stroke(.gray, lineWidth: 3))
             }
-            .padding(.bottom, 32)
+            .padding(.bottom)
         }
         .task {
             await cameraManager.configure()
@@ -402,7 +402,7 @@ AsyncImage(url: imageURL) { phase in
     }
 }
 .frame(width: 200, height: 200)
-.clipShape(RoundedRectangle(cornerRadius: 12))
+.clipShape(.rect(cornerRadius: 12))
 ```
 
 `AsyncImage` does not cache images across view redraws. For production apps with many images, use a dedicated image loading library or `URLCache`-based caching.

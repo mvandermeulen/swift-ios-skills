@@ -264,7 +264,7 @@ struct CameraScreen: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 50, height: 50)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(.rect(cornerRadius: 8))
                         }
                     } else {
                         Color.clear.frame(width: 50, height: 50)
@@ -286,8 +286,8 @@ struct CameraScreen: View {
 
                     Color.clear.frame(width: 50, height: 50)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 32)
+                .padding(.horizontal)
+                .padding(.bottom)
             }
         }
         .task {
@@ -637,7 +637,7 @@ struct QRScannerView: View {
                         .font(.headline)
                         .padding()
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
-                        .padding(.bottom, 60)
+                        .padding(.bottom)
                 }
             }
         }

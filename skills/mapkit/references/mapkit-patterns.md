@@ -122,8 +122,8 @@ Annotation(place.name, coordinate: place.coordinate, anchor: .bottom) {
         Text(place.name)
             .font(.caption)
             .fontWeight(.semibold)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
+            .padding(.horizontal)
+            .padding(.vertical)
             .background(.ultraThinMaterial, in: .capsule)
 
         Image(systemName: "mappin.circle.fill")
@@ -341,9 +341,9 @@ struct DirectionsMapView: View {
             if !travelTime.isEmpty {
                 Text(travelTime)
                     .font(.caption)
-                    .padding(8)
+                    .padding()
                     .background(.ultraThinMaterial, in: .capsule)
-                    .padding(.top, 8)
+                    .padding(.top)
             }
         }
         .task { await calculateRoute() }

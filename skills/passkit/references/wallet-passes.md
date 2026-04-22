@@ -211,7 +211,7 @@ struct PaymentView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack {
             OrderSummaryView()
 
             if canPay {

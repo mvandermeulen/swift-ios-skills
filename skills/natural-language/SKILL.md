@@ -227,12 +227,14 @@ struct TranslatableView: View {
     let text = "Hello, how are you?"
 
     var body: some View {
-        Text(text)
-            .onTapGesture { showTranslation = true }
-            .translationPresentation(
-                isPresented: $showTranslation,
-                text: text
-            )
+        Button { showTranslation = true } label: {
+            Text(text)
+        }
+        .buttonStyle(.plain)
+        .translationPresentation(
+            isPresented: $showTranslation,
+            text: text
+        )
     }
 }
 ```

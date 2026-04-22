@@ -341,7 +341,7 @@ struct AlarmLockScreenView: View {
     let context: ActivityViewContext<AlarmAttributes<CookingTimerMetadata>>
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "alarm.fill")
                     .foregroundStyle(context.attributes.tintColor)

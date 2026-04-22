@@ -536,7 +536,7 @@ struct DockStatusView: View {
     @State private var viewModel = DockViewModel()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading) {
             if viewModel.isConnected {
                 Label(
                     viewModel.accessoryName ?? "DockKit Accessory",
@@ -582,11 +582,11 @@ struct ManualControlView: View {
     let speed: Double = 0.2
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             Button { move(.tiltUp) } label: {
                 Image(systemName: "chevron.up")
             }
-            HStack(spacing: 40) {
+            HStack {
                 Button { move(.panLeft) } label: {
                     Image(systemName: "chevron.left")
                 }

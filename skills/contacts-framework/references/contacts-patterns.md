@@ -105,7 +105,7 @@ struct ContactListView: View {
 
     private var contactList: some View {
         List(manager.contacts, id: \.identifier) { contact in
-            HStack(spacing: 12) {
+            HStack {
                 contactAvatar(contact)
                 VStack(alignment: .leading) {
                     Text(manager.formattedName(for: contact))

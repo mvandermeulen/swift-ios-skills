@@ -348,7 +348,7 @@ struct NFCScannerView: View {
     @State private var scanner = NFCScannerModel()
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             if !scanner.isAvailable {
                 ContentUnavailableView(
                     "NFC Unavailable",

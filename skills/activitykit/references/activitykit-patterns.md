@@ -364,7 +364,7 @@ struct RideActivityWidget: Widget {
             DynamicIsland {
                 // EXPANDED: shown on long-press
                 DynamicIslandExpandedRegion(.leading) {
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading) {
                         Image(systemName: context.state.driverPhoto)
                             .font(.title2)
                         Text(context.state.driverName)
@@ -374,7 +374,7 @@ struct RideActivityWidget: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack(alignment: .trailing, spacing: 4) {
+                    VStack(alignment: .trailing) {
                         Text(timerInterval: context.state.eta, countsDown: true)
                             .font(.title3.monospacedDigit())
                         Text(String(format: "%.1f mi", context.state.distanceRemaining))
@@ -390,7 +390,7 @@ struct RideActivityWidget: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack(spacing: 8) {
+                    VStack {
                         ProgressView(
                             value: context.state.status.progress,
                             total: 1.0
@@ -436,7 +436,7 @@ struct RideLockScreenView: View {
     let context: ActivityViewContext<RideAttributes>
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack {
             // Header
             HStack {
                 VStack(alignment: .leading) {

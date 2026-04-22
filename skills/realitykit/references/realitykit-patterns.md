@@ -384,7 +384,7 @@ struct ARModelViewer: View {
     }
 
     private var controlsPanel: some View {
-        VStack(spacing: 12) {
+        VStack {
             Picker("Model", selection: $viewModel.selectedModelName) {
                 Text("Robot").tag("robot")
                 Text("Chair").tag("chair")
@@ -402,7 +402,7 @@ struct ARModelViewer: View {
         }
         .padding()
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(.rect(cornerRadius: 16))
         .padding()
     }
 }

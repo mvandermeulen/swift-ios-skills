@@ -339,7 +339,7 @@ struct SharePlayStatusView: View {
 
     var body: some View {
         if isConnected {
-            HStack(spacing: 4) {
+            HStack {
                 Image(systemName: "shareplay")
                     .foregroundStyle(.green)
                 Text("\(participantCount) connected")

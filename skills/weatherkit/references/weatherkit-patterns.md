@@ -68,7 +68,7 @@ struct WeatherDashboardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
+                VStack {
                     if manager.isLoading {
                         ProgressView("Loading weather...")
                     } else if let current = manager.current {
@@ -104,7 +104,7 @@ struct WeatherDashboardView: View {
     }
 
     private func currentConditionsCard(_ current: CurrentWeather) -> some View {
-        VStack(spacing: 12) {
+        VStack {
             Image(systemName: current.symbolName)
                 .font(.system(size: 60))
                 .symbolRenderingMode(.multicolor)
@@ -116,7 +116,7 @@ struct WeatherDashboardView: View {
                 .font(.title3)
                 .foregroundStyle(.secondary)
 
-            HStack(spacing: 24) {
+            HStack {
                 Label(
                     "Humidity \(current.humidity.formatted(.percent))",
                     systemImage: "humidity"
@@ -141,9 +141,9 @@ struct WeatherDashboardView: View {
                 .font(.headline)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
+                HStack {
                     ForEach(Array(forecast.prefix(12)), id: \.date) { hour in
-                        VStack(spacing: 8) {
+                        VStack {
                             Text(hour.date, format: .dateTime.hour())
                                 .font(.caption)
                             Image(systemName: hour.symbolName)
@@ -220,7 +220,7 @@ struct WeatherDashboardView: View {
                 }
                 .padding()
                 .background(.yellow.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .clipShape(.rect(cornerRadius: 8))
             }
         }
     }
@@ -235,7 +235,7 @@ struct WeatherAttributionView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack {
             AsyncImage(url: markURL) { image in
                 image
                     .resizable()
@@ -252,7 +252,7 @@ struct WeatherAttributionView: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .padding(.vertical, 8)
+        .padding(.vertical)
     }
 
     private var markURL: URL {

@@ -194,7 +194,7 @@ struct LightControlView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             Toggle("Power", isOn: $isOn)
                 .onChange(of: isOn) { _, newValue in
                     powerCharacteristic?.writeValue(newValue) { _ in }

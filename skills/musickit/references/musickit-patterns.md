@@ -84,11 +84,11 @@ struct MiniPlayerView: View {
     @Environment(MusicPlayerManager.self) private var manager
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack {
             if let song = manager.currentSong {
                 if let artwork = song.artwork {
                     ArtworkImage(artwork, width: 44, height: 44)
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .clipShape(.rect(cornerRadius: 6))
                 }
 
                 VStack(alignment: .leading) {
@@ -139,7 +139,7 @@ struct MusicSearchView: View {
                     HStack {
                         if let artwork = song.artwork {
                             ArtworkImage(artwork, width: 50, height: 50)
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                                .clipShape(.rect(cornerRadius: 4))
                         }
                         VStack(alignment: .leading) {
                             Text(song.title)

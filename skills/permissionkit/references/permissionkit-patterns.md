@@ -297,7 +297,7 @@ struct ContactDetailView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             Text(contact.name)
                 .font(.title)
 

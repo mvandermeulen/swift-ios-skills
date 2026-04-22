@@ -508,10 +508,10 @@ struct ScannerWithOverlay: View {
                 // Top instruction bar
                 Text("Point camera at text or barcode")
                     .font(.subheadline)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal)
+                    .padding(.vertical)
                     .background(.ultraThinMaterial, in: Capsule())
-                    .padding(.top, 60)
+                    .padding(.top)
 
                 Spacer()
 
@@ -529,7 +529,7 @@ struct ScannerWithOverlay: View {
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(.rect(cornerRadius: 12))
                         .padding()
                 }
             }
