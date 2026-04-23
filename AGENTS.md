@@ -105,6 +105,10 @@ When reviewing changes, check:
 - bundle membership still matches the intended taxonomy
 - public docs stay consistent with repo contents
 
+## GitHub release notes
+
+When writing GitHub release notes or CHANGELOG entries, always wrap Swift symbols that start with `@` in backticks (e.g. `@Observable`, `@MainActor`, `@AppStorage`). GitHub renders bare `@word` as a user mention, which tags random accounts.
+
 ## Beta-sensitive areas
 
 Re-check current Apple documentation before making strong claims about fast-moving or beta-era APIs referenced in:
