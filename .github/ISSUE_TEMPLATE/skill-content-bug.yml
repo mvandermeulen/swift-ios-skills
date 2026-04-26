@@ -82,6 +82,7 @@ body:
         - swift-security
         - swift-testing
         - swiftdata
+        - swiftlint
         - swiftui-animation
         - swiftui-gestures
         - swiftui-layout-components

@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.4.0
+
+### New skills
+
+- `swiftlint` — SwiftLint setup and enforcement: build tool plugin via SimplyDanny/SwiftLintPlugins, `.swiftlint.yml` configuration, rule selection strategy, `disabled_rules`/`opt_in_rules`/`only_rules`, baselines for incremental adoption, inline suppressions, autocorrect, CI integration with SARIF/GitHub Actions reporters, multiple configurations, regex custom rules, `swiftlint analyze`, multi-toolchain guidance
+
+### Bundle changes
+
+- Add `swiftlint` to `ios-engineering-skills` and `all-ios-skills` bundles.
+- Update `all-ios-skills` count from 83 to 84.
+- Update `ios-engineering-skills` description and keywords to include linting coverage.
+
+### Repository
+
+- Update README catalog, bundle table, install count, and skill listings for new skill.
+
 ## v3.3.0
 
 ### New skills
