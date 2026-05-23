@@ -1,5 +1,9 @@
 {
   "name": "dpearson2699/swift-ios-skills",
   "mode": "vendored",
-  "dependencies": {}
+  "dependencies": {
+    "tessl-labs/tessl-skill-eval-scenarios": {
+      "version": "0.1.0"
+    }
+  }
 }
