@@ -6,3 +6,9 @@ tmp
 firebase-debug.log
 .claude
 .agents
+.codex
+.gemini
+.github/skills
+.serena
+.vscode
+.tessl/RULES.md
