@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.4.1
+
+### Repository
+
+- Add Tessl tile configuration for the Swift iOS skills collection.
+- Include README and changelog as Tessl tile documentation content.
+- Format Swift `@` symbols in prose as inline code so Tessl and GitHub do not treat them as missing references or user mentions.
+
 ## v3.4.0
 
 ### New skills

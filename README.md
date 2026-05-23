@@ -14,6 +14,8 @@ Compatible with [Claude Code](https://claude.ai/code), [OpenAI Codex](https://de
 
 Every skill is self-contained. No skill depends on another. Install only what you need.
 
+Release history: [CHANGELOG.md](CHANGELOG.md).
+
 ## Contents
 
 - [Install](#install)
