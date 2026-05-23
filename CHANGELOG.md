@@ -5,6 +5,7 @@
 ### Repository
 
 - Add a GitHub Actions workflow to publish the Tessl tile to the registry from release tags or manual dispatch.
+- Add Tessl project metadata and MCP configuration for supported coding agents.
 - Update Tessl tile and Claude Code plugin metadata for the 3.5.0 release.
 
 ## v3.4.1
