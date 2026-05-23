@@ -27,22 +27,32 @@ There is no normal app-style build or test loop here. Validation is mostly edito
 
 ## Required context before any skill change
 
-Before editing a skill, creating a new one, or revising repo guidance, you must load and follow Anthropic's Agent Skills best practices:
-- <https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices.md>
+Before editing a skill, creating a new one, revising repo guidance, or auditing skill quality, you must load and follow the current Agent Skills standards and authoring guidance:
+- Anthropic Agent Skills best practices: <https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices.md>
+- Agent Skills specification: <https://agentskills.io/specification.md>
+- Agent Skills quickstart: <https://agentskills.io/skill-creation/quickstart.md>
+- Agent Skills best practices: <https://agentskills.io/skill-creation/best-practices.md>
+- Optimizing skill descriptions: <https://agentskills.io/skill-creation/optimizing-descriptions.md>
+- Evaluating skill output quality: <https://agentskills.io/skill-creation/evaluating-skills.md>
+- Using scripts in skills: <https://agentskills.io/skill-creation/using-scripts.md>
 
-Treat that document as required context for work in this repository, not optional background reading.
+Treat these documents as required context for work in this repository, not optional background reading.
 
-The rules below are a repo-specific reminder, not a replacement for the source document.
+The rules below are a repo-specific reminder, not a replacement for those sources.
 
 ## Repo-specific authoring rules
 
 - Keep `SKILL.md` concise. Push long examples and deep detail into local `references/` files.
-- Use progressive disclosure. Important reference files should be linked directly from `SKILL.md`.
+- Use progressive disclosure. Important reference files should be linked directly from `SKILL.md` with clear loading triggers.
 - Keep skills self-contained. A skill may mention a sibling skill, but it should not depend on another skill's files.
 - Preserve topic boundaries between sibling skills instead of recombining broad topics.
 - Prefer one strong modern default over presenting many competing approaches.
 - Keep guidance focused on current Apple APIs. Avoid deprecated patterns unless the skill is explicitly about migration.
 - When a skill changes substantially, sanity-check it with realistic prompts to make sure the description, scope, and guidance still work well in practice.
+
+## Skill audit and evaluation workflow
+
+For full Apple skill audits, eval generation, Tessl scenarios, and publish-readiness checks, use the repo-local `apple-skill-audit` skill in `.agents/skills/apple-skill-audit/`. Keep detailed workflow steps there so this file remains focused on durable repo policy.
 
 ## Ground Apple claims in official sources
 
