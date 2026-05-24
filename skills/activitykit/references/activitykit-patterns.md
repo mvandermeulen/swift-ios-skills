@@ -41,7 +41,9 @@ struct RideAttributes: ActivityAttributes {
         var driverName: String
         var driverPhoto: String        // SF Symbol name or asset name
         var vehicleDescription: String
-        var eta: ClosedRange<Date>
+        var etaStartSeconds: Int
+        var etaEndSeconds: Int
+        // For server pushes, prefer scalar fields or coordinated custom Codable keys.
         var status: RideStatus
         var distanceRemaining: Double   // miles
     }
@@ -56,6 +58,13 @@ enum RideStatus: String, Codable, Hashable {
     case completed
     case cancelled
     case failed
+}
+
+extension RideAttributes.ContentState {
+    var etaRange: ClosedRange<Date> {
+        Date(timeIntervalSince1970: TimeInterval(etaStartSeconds))...
+            Date(timeIntervalSince1970: TimeInterval(etaEndSeconds))
+    }
 }
 ```
 
@@ -92,7 +101,8 @@ func startRideActivity(
         driverName: driver,
         driverPhoto: "car.fill",
         vehicleDescription: vehicle,
-        eta: Date()...Date().addingTimeInterval(600),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().addingTimeInterval(600).timeIntervalSince1970),
         status: .driverAssigned,
         distanceRemaining: 2.5
     )
@@ -188,7 +198,8 @@ func updateRideActivity(
         driverName: activity.content.state.driverName,
         driverPhoto: activity.content.state.driverPhoto,
         vehicleDescription: activity.content.state.vehicleDescription,
-        eta: eta,
+        etaStartSeconds: Int(eta.lowerBound.timeIntervalSince1970),
+        etaEndSeconds: Int(eta.upperBound.timeIntervalSince1970),
         status: newStatus,
         distanceRemaining: distance
     )
@@ -233,10 +244,8 @@ private func alertMessage(for status: RideStatus) -> String {
             "driverName": "Maria",
             "driverPhoto": "car.fill",
             "vehicleDescription": "White Toyota Camry",
-            "eta": {
-                "lowerBound": 1700000000,
-                "upperBound": 1700000300
-            },
+            "etaStartSeconds": 1700000000,
+            "etaEndSeconds": 1700000300,
             "status": "driverArrived",
             "distanceRemaining": 0.0
         },
@@ -263,10 +272,8 @@ private func alertMessage(for status: RideStatus) -> String {
             "driverName": "Maria",
             "driverPhoto": "car.fill",
             "vehicleDescription": "White Toyota Camry",
-            "eta": {
-                "lowerBound": 1700002000,
-                "upperBound": 1700002000
-            },
+            "etaStartSeconds": 1700002000,
+            "etaEndSeconds": 1700002000,
             "status": "completed",
             "distanceRemaining": 0.0
         }
@@ -293,10 +300,8 @@ Send to the push-to-start token to remotely create an activity. The `alert` fiel
             "driverName": "Maria",
             "driverPhoto": "car.fill",
             "vehicleDescription": "White Toyota Camry",
-            "eta": {
-                "lowerBound": 1700000000,
-                "upperBound": 1700000600
-            },
+            "etaStartSeconds": 1700000000,
+            "etaEndSeconds": 1700000600,
             "status": "driverAssigned",
             "distanceRemaining": 3.2
         },
@@ -321,10 +326,10 @@ The `aps.alert` payload controls visible alert/banner/sound behavior; priority
 alone does not create an alert. The `content-state` JSON must decode into
 `ActivityAttributes.ContentState`. Use the default synthesized `Codable` key and
 value shape unless the Swift model declares custom `CodingKeys`; then coordinate
-those exact keys and value shapes server-side. Do not rely on uncoordinated
-`JSONEncoder` or `JSONDecoder` key strategies. A type mismatch (e.g., sending a
-string where a number is expected) can prevent ActivityKit from applying the
-update.
+those exact keys and value shapes server-side. Do not assume `Date` or
+`ClosedRange<Date>` values are Unix timestamp dictionaries unless your Swift
+model explicitly encodes them that way. A type mismatch (e.g., sending a string
+where a number is expected) can prevent ActivityKit from applying the update.
 
 ### Channel / Broadcast Updates (iOS 18+)
 
@@ -355,7 +360,8 @@ func endRideActivity(
         driverName: activity.content.state.driverName,
         driverPhoto: activity.content.state.driverPhoto,
         vehicleDescription: activity.content.state.vehicleDescription,
-        eta: Date()...Date(),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().timeIntervalSince1970),
         status: finalStatus,
         distanceRemaining: 0
     )
@@ -398,7 +404,8 @@ func handleTerminalServerFailure(
         driverName: activity.content.state.driverName,
         driverPhoto: activity.content.state.driverPhoto,
         vehicleDescription: message,
-        eta: Date()...Date(),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().timeIntervalSince1970),
         status: .failed,
         distanceRemaining: 0
     )
@@ -441,7 +448,7 @@ struct RideActivityWidget: Widget {
 
                 DynamicIslandExpandedRegion(.trailing) {
                     VStack(alignment: .trailing) {
-                        Text(timerInterval: context.state.eta, countsDown: true)
+                        Text(timerInterval: context.state.etaRange, countsDown: true)
                             .font(.title3.monospacedDigit())
                         Text(String(format: "%.1f mi", context.state.distanceRemaining))
                             .font(.caption2)
@@ -481,7 +488,7 @@ struct RideActivityWidget: Widget {
                     .foregroundStyle(.green)
             } compactTrailing: {
                 // COMPACT TRAILING: one key value
-                Text(timerInterval: context.state.eta, countsDown: true)
+                Text(timerInterval: context.state.etaRange, countsDown: true)
                     .frame(width: 44)
                     .monospacedDigit()
             } minimal: {
@@ -514,7 +521,7 @@ struct RideLockScreenView: View {
                 }
                 Spacer()
                 // Live countdown timer (auto-updating, no code needed)
-                Text(timerInterval: context.state.eta, countsDown: true)
+                Text(timerInterval: context.state.etaRange, countsDown: true)
                     .font(.title2.monospacedDigit().bold())
                     .foregroundStyle(.green)
             }
@@ -822,7 +829,8 @@ previews for rapid iteration:
         driverName: "Alex",
         driverPhoto: "car.fill",
         vehicleDescription: "White Toyota Camry",
-        eta: Date()...Date().addingTimeInterval(300),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().addingTimeInterval(300).timeIntervalSince1970),
         status: .driverEnRoute,
         distanceRemaining: 1.5
     )
@@ -830,7 +838,8 @@ previews for rapid iteration:
         driverName: "Alex",
         driverPhoto: "car.fill",
         vehicleDescription: "White Toyota Camry",
-        eta: Date()...Date().addingTimeInterval(60),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().addingTimeInterval(60).timeIntervalSince1970),
         status: .arriving,
         distanceRemaining: 0.1
     )
@@ -843,7 +852,8 @@ previews for rapid iteration:
         driverName: "Alex",
         driverPhoto: "car.fill",
         vehicleDescription: "White Toyota Camry",
-        eta: Date()...Date().addingTimeInterval(300),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().addingTimeInterval(300).timeIntervalSince1970),
         status: .driverEnRoute,
         distanceRemaining: 1.5
     )
@@ -856,7 +866,8 @@ previews for rapid iteration:
         driverName: "Alex",
         driverPhoto: "car.fill",
         vehicleDescription: "White Toyota Camry",
-        eta: Date()...Date().addingTimeInterval(300),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().addingTimeInterval(300).timeIntervalSince1970),
         status: .driverEnRoute,
         distanceRemaining: 1.5
     )
@@ -869,7 +880,8 @@ previews for rapid iteration:
         driverName: "Alex",
         driverPhoto: "car.fill",
         vehicleDescription: "White Toyota Camry",
-        eta: Date()...Date().addingTimeInterval(300),
+        etaStartSeconds: Int(Date().timeIntervalSince1970),
+        etaEndSeconds: Int(Date().addingTimeInterval(300).timeIntervalSince1970),
         status: .driverEnRoute,
         distanceRemaining: 1.5
     )
@@ -904,7 +916,7 @@ curl -v \
   --header "apns-topic: com.example.app.push-type.liveactivity" \
   --header "apns-priority: 10" \
   --header "authorization: bearer $JWT_TOKEN" \
-  --data '{"aps":{"timestamp":1700000000,"event":"update","content-state":{"driverName":"Alex","driverPhoto":"car.fill","vehicleDescription":"White Toyota Camry","eta":{"lowerBound":1700000000,"upperBound":1700000300},"status":"driverArrived","distanceRemaining":0.0},"alert":{"title":"Driver Arrived","body":"Your driver is here!"}}}' \
+  --data '{"aps":{"timestamp":1700000000,"event":"update","content-state":{"driverName":"Alex","driverPhoto":"car.fill","vehicleDescription":"White Toyota Camry","etaStartSeconds":1700000000,"etaEndSeconds":1700000300,"status":"driverArrived","distanceRemaining":0.0},"alert":{"title":"Driver Arrived","body":"Your driver is here!"}}}' \
   https://api.push.apple.com/3/device/$DEVICE_PUSH_TOKEN
 ```
 

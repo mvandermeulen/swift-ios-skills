@@ -37,7 +37,7 @@
         "Does not turn the answer into a full generic APNs authentication or remote notification setup guide.",
         "Does not recommend TimelineProvider for Live Activity lifecycle updates and distinguishes Live Activities from ordinary widgets.",
         "Points generic APNs registration/key rotation toward push-notifications guidance and broad widget timeline architecture toward WidgetKit guidance.",
-        "Mentions that Live Activity push payload content-state must match the default Codable shape unless CodingKeys are coordinated."
+        "Mentions that Live Activity push payload content-state must match the actual ContentState Codable shape and must not assume Date or ClosedRange<Date> use Unix timestamp lowerBound/upperBound dictionaries unless explicitly coordinated."
       ]
     }
   ]

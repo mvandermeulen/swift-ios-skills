@@ -9,7 +9,16 @@ ActivityKit owns real-time, glanceable Live Activities displayed on the Lock
 Screen and, on supported devices, Dynamic Island. StandBy, CarPlay, and a
 paired Mac can also display Live Activities, but do not blur that core routing:
 ordinary Home Screen/timeline widgets belong in `widgetkit`, and generic APNs
-setup belongs in `push-notifications`. Patterns target iOS 26+ with Swift 6.3;
+setup belongs in `push-notifications`. Live Activity push payload shape stays in
+ActivityKit: device-token updates use `apns-push-type: liveactivity` and
+`apns-topic: <bundle-id>.push-type.liveactivity`, while `aps.content-state` must
+decode into the app's actual `ActivityAttributes.ContentState` `Codable` shape.
+Do not assume `Date` or `ClosedRange<Date>` use Unix timestamp
+`lowerBound`/`upperBound` dictionaries unless the Swift model and server
+contract coordinate that encoding. Boundary answers that keep ActivityKit APNs
+payloads, `content-state`, or Live Activity data contracts in scope should
+include these payload-shape invariants even when routing generic APNs setup
+elsewhere. Patterns target iOS 26+ with Swift 6.3;
 modern `ActivityContent` lifecycle examples require iOS 16.2+ unless noted.
 
 See [references/activitykit-patterns.md](references/activitykit-patterns.md) for complete code patterns including push payload formats, concurrent activities, state observation, and testing.
@@ -326,40 +335,9 @@ Send an HTTP/2 POST to APNs with these headers and JSON body:
 The `aps.alert` payload controls visible alert/banner/sound behavior; priority
 alone does not create an alert.
 
-**Update payload:**
+**Payload body:** Put `timestamp`, `event`, and the full `content-state` inside `aps`. Use `event: "update"` for updates, `event: "end"` plus optional `dismissal-date` for ending, and `event: "start"` with `attributes-type`, `attributes`, `content-state`, and required `alert` for push-to-start. Add `stale-date`, `relevance-score`, or `alert` when appropriate.
 
-```json
-{
-    "aps": {
-        "timestamp": 1700000000,
-        "event": "update",
-        "content-state": {
-            "driverName": "Alex",
-            "estimatedDeliveryTime": {
-                "lowerBound": 1700000000,
-                "upperBound": 1700001800
-            },
-            "currentStep": "delivering"
-        },
-        "stale-date": 1700000300,
-        "alert": {
-            "title": "Delivery Update",
-            "body": "Your driver is nearby!"
-        }
-    }
-}
-```
-
-**End payload:** Same structure with `"event": "end"` and optional `"dismissal-date"`.
-**Start payload:** Requires `"event": "start"`, `"attributes-type"`, `"attributes"`,
-`"content-state"`, and `"alert"`.
-
-The `content-state` JSON must decode into `ActivityAttributes.ContentState`.
-Use the default synthesized `Codable` key and value shape unless the Swift model
-declares custom `CodingKeys`; then coordinate those exact keys and value shapes
-server-side. Do not rely on uncoordinated `JSONEncoder` or `JSONDecoder` key
-strategies. Mismatched keys or types can prevent ActivityKit from applying the
-update.
+The `content-state` JSON must decode into `ActivityAttributes.ContentState`. Use the default synthesized `Codable` key and value shape unless the Swift model declares custom `CodingKeys`; then coordinate those exact keys and value shapes server-side. Do not assume `Date` or `ClosedRange<Date>` values are Unix timestamp dictionaries unless your Swift model explicitly encodes them that way. Mismatched keys or types can prevent ActivityKit from applying the update.
 
 ### Push-to-Start
 
@@ -411,13 +389,11 @@ let activity = try Activity.request(
 ### ActivityStyle (iOS 18+ request parameter)
 
 Use the iOS 18+ `style:` request parameter to choose persistence behavior. Use
-`.standard` for most apps and for persistent Live Activities that should remain
-until the app, push, user, or system duration limit ends them. Do not use
-`.transient` for persistent event tracking such as deliveries, rides, sports
-scores, timers, or flight boards. `.transient` is only for a short-lived
-expanded Dynamic Island presentation that can auto-end when the user locks the
-device, collapses or shrinks the expanded presentation, leaves the app, or does
-other work outside Dynamic Island.
+`.standard` for persistent Live Activities such as deliveries, rides, sports
+scores, timers, and flight/status boards. Use `.transient` only for a
+short-lived expanded Dynamic Island presentation; it can auto-end when the user
+locks the device, collapses or shrinks the expanded presentation, leaves the
+app, or does other work outside Dynamic Island.
 
 ```swift
 let activity = try Activity.request(
@@ -464,6 +440,9 @@ let activity = try Activity.request(
 **DON'T:** Treat Lock Screen or Dynamic Island Live Activities as ordinary Home Screen/timeline widgets.
 **DO:** Use ActivityKit for the Live Activity lifecycle and those display surfaces; route ordinary Home Screen/timeline widgets to `widgetkit`.
 
+**DON'T:** Reduce Live Activity payload routing to generic `content-state` matching when the prompt involves APNs payloads.
+**DO:** Include the actual `ContentState` `Codable` contract and coordinated `Date`/`ClosedRange<Date>` encoding caveat; route generic APNs auth and registration to `push-notifications`.
+
 **DON'T:** Store sensitive information in ActivityAttributes (visible on Lock Screen).
 **DO:** Keep sensitive data in the app and show only safe-to-display summaries.
 
@@ -494,7 +473,7 @@ let activity = try Activity.request(
 - [ ] Push update token forwarded to server via `activity.pushTokenUpdates`
 - [ ] Push-to-start token collected via `Activity<Attributes>.pushToStartTokenUpdates`
 - [ ] Push-to-start payload includes required `alert`
-- [ ] `content-state` JSON matches the default `ContentState` `Codable` shape or coordinated `CodingKeys`
+- [ ] `content-state` JSON matches the actual `ContentState` `Codable` shape, including coordinated date/range encoding
 - [ ] Review distinguishes 8-hour active lifetime, 12-hour total system-ended Lock Screen presence, and 4-hour app-ended `.default` linger
 - [ ] `ActivityAuthorizationInfo` checked before starting
 - [ ] `frequentPushesEnabled` checked before assuming high-cadence pushes

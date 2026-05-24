@@ -24,7 +24,7 @@
     },
     {
       "name": "Payload Codable",
-      "description": "Mentions that Live Activity content-state payloads must match the default ContentState Codable shape unless CodingKeys are coordinated.",
+      "description": "Mentions that Live Activity content-state payloads must match the actual ContentState Codable shape and must not assume Date or ClosedRange<Date> use Unix timestamp lowerBound/upperBound dictionaries unless explicitly coordinated.",
       "max_score": 10
     },
     {
