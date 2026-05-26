@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Skill updates
+
+- `authentication` -- Add passkey registration/sign-in guidance with platform passkeys, AutoFill-assisted requests, and physical security key boundaries; tighten OAuth presentation-anchor and biometric/keychain guidance.
+
 ## v3.5.0
 
 ### Repository
