@@ -261,7 +261,7 @@ $skill-installer install https://github.com/dpearson2699/swift-ios-skills/tree/m
 
 | Skill | What it covers |
 |-------|---------------|
-| [appmigrationkit](skills/appmigrationkit/) | Cross-platform data transfer, MigrationController, export/import extensions (iOS 26) |
+| [appmigrationkit](skills/appmigrationkit/) | Cross-platform data transfer, AppMigrationExtension export/import (iOS 26) |
 | [audioaccessorykit](skills/audioaccessorykit/) | Audio accessory features, automatic switching, device placement (iOS 26.4) |
 | [browserenginekit](skills/browserenginekit/) | Alternative browser engines (EU), process management, web content extensions |
 | [callkit](skills/callkit/) | CXProvider, CXCallController, PushKit VoIP registration, call directory extensions |
