@@ -12,6 +12,7 @@ with Swift 6.3.
 
 - [Model Definition](#model-definition)
 - [ModelContainer Setup](#modelcontainer-setup)
+- [CloudKit Sync](#cloudkit-sync)
 - [CRUD Operations](#crud-operations)
 - [`@Query in SwiftUI`](#query-in-swiftui)
 - [#Predicate](#predicate)
@@ -77,6 +78,28 @@ let container = try ModelContainer(for: SchemaV2.Trip.self,
 let container = try ModelContainer(for: Trip.self,
     configurations: ModelConfiguration(isStoredInMemoryOnly: true))
 ```
+
+## CloudKit Sync
+
+`ModelConfiguration(..., cloudKitDatabase:)` opts a SwiftData store into
+automatic CloudKit sync, but app entitlements still gate sync.
+
+For any SwiftData CloudKit setup or schema-review task, include a separate
+**Capabilities** verdict before schema findings:
+
+- **Capabilities**: Xcode target has the iCloud capability with CloudKit enabled
+  and the intended container selected, plus Background Modes > Remote
+  notifications. Without these entitlements, automatic sync is not fully
+  configured even if `cloudKitDatabase` is set.
+- **Schema compatibility**: no `@Attribute(.unique)` or `#Unique`;
+  relationships are optional, have explicit inverses where needed, and avoid
+  `.deny`; large `Data` uses `@Attribute(.externalStorage)`.
+- **Scalar attributes**: do not make every scalar optional just for CloudKit.
+  Keep required scalars nonoptional when initializers, defaults, or migrations
+  provide valid values.
+- **Schema rollout**: initialize the development schema only in nonproduction
+  builds, verify it in CloudKit Dashboard, promote before release, and treat
+  production changes as additive only.
 
 ## CRUD Operations
 
@@ -317,7 +340,8 @@ struct DetailView: View {
 - [ ] `PersistentIdentifier` used across actor boundaries
 - [ ] Schema changes have `VersionedSchema` + `SchemaMigrationPlan`
 - [ ] Large data uses `@Attribute(.externalStorage)`
-- [ ] CloudKit models use optionals and avoid unique constraints
+- [ ] CloudKit models avoid uniqueness, use optional relationships, avoid `.deny`, and do not blanket-optionalize scalars
+- [ ] CloudKit sync has iCloud + CloudKit, Remote notifications, and production schema rollout checked
 - [ ] Explicit `save()` in `@ModelActor` methods
 - [ ] Previews use `ModelConfiguration(isStoredInMemoryOnly: true)`
 - [ ] `@Model` classes accessed from SwiftUI views are on `@MainActor` via `@ModelActor` or MainActor isolation
@@ -329,4 +353,3 @@ struct DetailView: View {
 - [references/core-data-coexistence.md](references/core-data-coexistence.md) — standalone Core Data patterns and Core Data to SwiftData migration
 - [references/predicate-pitfalls.md](references/predicate-pitfalls.md) — #Predicate runtime crashes, unsupported expressions, safe patterns
 - [references/indexing.md](references/indexing.md) — #Index macro, compound indexes, when to index, migration
-
