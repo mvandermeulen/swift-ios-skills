@@ -5,6 +5,7 @@
 ### Skill updates
 
 - `authentication` -- Add passkey registration/sign-in guidance with platform passkeys, AutoFill-assisted requests, and physical security key boundaries; tighten OAuth presentation-anchor and biometric/keychain guidance.
+- `device-integrity` -- Correct App Attest attestation nonce and assertion verification guidance, tighten DeviceCheck token reuse and App Attest error/environment handling, and add local eval seeds for attestation, assertion, and boundary coverage.
 
 ## v3.5.0
 
