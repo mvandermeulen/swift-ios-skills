@@ -1,18 +1,16 @@
-# Document Markup Framework Boundary
+# Annotation Framework Boundary
 
 ## Problem/Feature Description
 
-A document editor is planning an iOS 26 annotation mode. Users need freehand Apple Pencil notes and signatures, but the same mode also needs shapes, arrows, text boxes, imported images, stickers, and a system-standard markup toolbar. The team is unsure whether to build on a raw PencilKit canvas, a PaperKit surface, or a combination.
+An annotation feature needs freehand Apple Pencil signatures, movable text boxes, arrows, image stickers, and a system-standard markup toolbar. The team is unsure whether to implement everything with PencilKit or split responsibilities with PaperKit.
 
-Write the framework boundary and a smallest useful code sketch for the recommended approach. The answer should help engineers avoid rebuilding platform markup behavior by hand while still understanding where PencilKit fits.
+Write a short architecture note that assigns responsibilities to the right framework and explains the handoff points.
 
 ## Output Specification
 
-Create `markup-framework-boundary.md` containing:
+Create `pencilkit-paperkit-boundary.md` with:
 
-- The recommended owner framework for this feature.
-- The parts that still belong to PencilKit.
-- A minimal UIKit or SwiftUI-oriented code sketch.
-- Notes on preserving existing freehand drawing data if the app already has PencilKit content.
-
-Do not create an Xcode project. Keep the output to implementation guidance and snippets.
+- What belongs in PencilKit.
+- What belongs in PaperKit.
+- The bridge points between `PKDrawing`, `PKTool`, and PaperKit markup.
+- A short list of mistakes to avoid.

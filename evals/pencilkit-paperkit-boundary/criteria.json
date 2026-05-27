@@ -1,45 +1,30 @@
 {
-  "context": "Tests whether the answer preserves the PencilKit/PaperKit split for full document markup on iOS 26.",
+  "context": "Tests whether the answer preserves the PencilKit/PaperKit sibling boundary for annotation and markup work.",
   "type": "weighted_checklist",
   "checklist": [
     {
-      "name": "PaperKit owner",
-      "description": "Chooses PaperKit as the owning surface for full document markup on iOS 26.",
-      "max_score": 15
+      "name": "PencilKit Scope",
+      "description": "Keeps PencilKit scope to freehand drawing, signatures, PKCanvasView, PKToolPicker, PKDrawing serialization/export, and stroke inspection.",
+      "max_score": 25
     },
     {
-      "name": "Structured markup",
-      "description": "Assigns shapes, arrows or lines, text boxes, images, stickers, loupes, or system markup UI to PaperKit rather than raw PencilKit.",
+      "name": "PaperKit Scope",
+      "description": "Routes text boxes, arrows, shapes, images, stickers, loupes, and system-standard markup toolbar needs to PaperKit.",
+      "max_score": 25
+    },
+    {
+      "name": "Bridge Points",
+      "description": "Mentions that PaperMarkupViewController.drawingTool accepts a PKTool and PaperMarkup can append PKDrawing.",
       "max_score": 20
     },
     {
-      "name": "PencilKit role",
-      "description": "Keeps PencilKit responsible for direct freeform drawing, PKCanvasView, PKToolPicker, PKTool, or PKDrawing serialization/interoperability.",
-      "max_score": 15
+      "name": "No Overclaiming",
+      "description": "Does not claim PencilKit directly owns structured markup elements such as movable text boxes, stickers, or the PaperKit markup toolbar.",
+      "max_score": 20
     },
     {
-      "name": "No manual rebuild",
-      "description": "Does not recommend manually rebuilding PaperKit-style structured markup elements on a PKCanvasView when PaperKit is available.",
-      "max_score": 15
-    },
-    {
-      "name": "Paper controller",
-      "description": "Uses or recommends PaperMarkupViewController for interactive markup.",
-      "max_score": 10
-    },
-    {
-      "name": "Paper data",
-      "description": "Uses or recommends PaperMarkup for the structured markup data model.",
-      "max_score": 10
-    },
-    {
-      "name": "PKTool interop",
-      "description": "Mentions that PaperMarkupViewController accepts PencilKit tools or that PaperKit uses PencilKit drawing tools.",
-      "max_score": 5
-    },
-    {
-      "name": "Drawing import",
-      "description": "Mentions preserving or importing existing PKDrawing content, such as appending a PKDrawing to PaperMarkup.",
+      "name": "Handoff Plan",
+      "description": "Provides a practical handoff plan between saved PKDrawing content and a PaperKit markup workflow.",
       "max_score": 10
     }
   ]
