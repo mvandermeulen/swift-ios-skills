@@ -169,7 +169,7 @@
 - `tabletopkit` -- Multiplayer spatial board games, pieces, cards, dice (visionOS)
 - `relevancekit` -- Widget relevance signals, time/location-based providers (watchOS 26)
 - `audioaccessorykit` -- Audio accessory features, automatic switching (iOS 26.4)
-- `cryptotokenkit` -- TKTokenDriver, TKSmartCard, security tokens, certificate-based auth
+- `cryptotokenkit` -- TKTokenDriver, TKSmartCard, iOS 26 NFC smart cards, certificate-based auth
 
 ### Bundle changes
 

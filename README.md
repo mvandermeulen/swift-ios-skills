@@ -265,7 +265,7 @@ $skill-installer install https://github.com/dpearson2699/swift-ios-skills/tree/m
 | [audioaccessorykit](skills/audioaccessorykit/) | Audio accessory features, automatic switching, device placement (iOS 26.4) |
 | [browserenginekit](skills/browserenginekit/) | Alternative browser engines (EU), process management, web content extensions |
 | [callkit](skills/callkit/) | CXProvider, CXCallController, PushKit VoIP registration, call directory extensions |
-| [cryptotokenkit](skills/cryptotokenkit/) | TKTokenDriver, TKSmartCard, security tokens, certificate-based auth |
+| [cryptotokenkit](skills/cryptotokenkit/) | TKTokenDriver, TKSmartCard, iOS 26 NFC smart cards, certificate-based auth |
 | [energykit](skills/energykit/) | ElectricityGuidance, EnergyVenue, grid forecasts, load event submission, electricity insights |
 | [homekit](skills/homekit/) | HMHomeManager, accessories, rooms, actions, triggers, MatterSupport commissioning |
 | [permissionkit](skills/permissionkit/) | AskCenter, PermissionQuestion, child communication safety, CommunicationLimits |
