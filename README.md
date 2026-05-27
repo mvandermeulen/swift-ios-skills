@@ -233,7 +233,7 @@ $skill-installer install https://github.com/dpearson2699/swift-ios-skills/tree/m
 | [app-store-review](skills/app-store-review/) | App Review guidelines, rejection prevention, privacy manifests, ATT, HIG compliance |
 | [authentication](skills/authentication/) | Sign in with Apple, ASAuthorizationController, passkeys, biometric auth (LAContext), credential management |
 | [background-processing](skills/background-processing/) | BGTaskScheduler, background refresh, URLSession background transfers |
-| [cryptokit](skills/cryptokit/) | SHA256, HMAC, AES-GCM, ChaChaPoly, P256/Curve25519 signing, ECDH, Secure Enclave |
+| [cryptokit](skills/cryptokit/) | SHA-2/SHA-3, HMAC, AES-GCM, ChaChaPoly, HPKE, ML-KEM/ML-DSA, P256/Curve25519 signing, ECDH, Secure Enclave |
 | [debugging-instruments](skills/debugging-instruments/) | Xcode debugger, Instruments, os_signpost, MetricKit, crash symbolication |
 | [device-integrity](skills/device-integrity/) | DeviceCheck (DCDevice per-device bits), App Attest (DCAppAttestService attestation and assertion flows) |
 | [ios-accessibility](skills/ios-accessibility/) | VoiceOver, Dynamic Type, custom rotors, accessibility focus, assistive-technology support |
