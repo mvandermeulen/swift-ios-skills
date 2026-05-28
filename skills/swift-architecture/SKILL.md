@@ -470,7 +470,7 @@ in a `Reducer`, migrate its dependencies to `@Dependency`, and test.
 
 | Mistake | Fix |
 |---------|-----|
-| Using `ObservableObject` in new iOS 17+ code | Use `@Observable`; isolate UI-observed types to `@MainActor` |
+| Using `ObservableObject` in new iOS 17+ code | Use `@Observable`; isolate UI-observed app state to `@MainActor` for Swift 6 data-race safety |
 | View model that only forwards model properties | Remove the view model; use MV pattern |
 | Massive view model with navigation, networking, and formatting | Split into focused collaborators (coordinator, service, formatter) |
 | Choosing TCA for a two-screen app | Start with MV; adopt TCA when composition and testing demands justify it |
@@ -482,7 +482,7 @@ in a `Reducer`, migrate its dependencies to `@Dependency`, and test.
 ## Review Checklist
 
 - [ ] Architecture choice is justified by feature complexity and team needs
-- [ ] UI-observed `@Observable` types use `@MainActor`; migration distinguishes `@State`, plain injection, and `@Bindable`
+- [ ] UI-observed `@Observable` app state is isolated to `@MainActor` for Swift 6 data-race safety; migration distinguishes `@State`, plain injection, and `@Bindable`
 - [ ] Dependencies are injected, not created internally (testability)
 - [ ] SwiftUI MV mechanics, `NavigationSplitView`, strict-concurrency diagnostics, fixtures, and parameterized tests hand off to sibling skills explicitly
 - [ ] State mutations happen in a clear, auditable location
