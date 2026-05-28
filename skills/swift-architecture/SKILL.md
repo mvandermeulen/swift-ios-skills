@@ -25,16 +25,16 @@ Select and implement the right architecture pattern for Apple platform apps buil
 
 ## Scope Boundary
 
-This skill owns architecture selection, pattern tradeoffs,
-module boundaries, dependency direction, and migration strategy. Use exact
-handoffs: `swiftui-patterns` for `@State`, `@Bindable`, `@Environment`,
-edit-sheet state, bindings, local view state, view composition, and SwiftUI MV
-implementation mechanics; `swiftui-navigation` for `NavigationStack`,
-`NavigationSplitView`, `NavigationPath`, route enums, route models, sheets,
-tabs, and deep-link URL handling; `swift-concurrency` for `@MainActor`, default
-MainActor isolation, `Sendable`, actor isolation, structured concurrency,
-strict-concurrency diagnostics, and data-race diagnostics; `swift-testing` for
-`@Test`, `#expect`, `#require`, fixtures, parameterized tests, mocks, stubs,
+This skill owns architecture-level decisions: pattern selection, module
+boundaries, dependency direction, migration/escalation strategy, and structural
+test strategy. It does not own SwiftUI state mechanics; route `@State`,
+`@Bindable`, `@Environment`, edit-sheet/local state, bindings, view composition,
+and `@Observable` MV implementation mechanics to `swiftui-patterns`. Use
+`swiftui-navigation` for `NavigationStack`, `NavigationSplitView`,
+`NavigationPath`, route models, sheets, tabs, and deep-link URL handling;
+`swift-concurrency` for `@MainActor`, default MainActor isolation, `Sendable`,
+strict-concurrency diagnostics, and data-race diagnostics; and `swift-testing`
+for `@Test`, `#expect`, `#require`, fixtures, parameterized tests, mocks, stubs,
 and suite organization.
 
 ## Architecture Selection
@@ -53,12 +53,11 @@ and suite organization.
 with `@Observable`). Escalate to MVVM or TCA only when the feature's complexity
 demands it.
 
-Architecture-selection answers that defer implementation detail must name
-sibling skill IDs; phrases like "SwiftUI state design" are insufficient. Route
-edit sheets, bindings, composition, and SwiftUI MV mechanics to
-`swiftui-patterns`; `NavigationStack`, `NavigationSplitView`, route enums,
-sheets, tabs, and deep links to `swiftui-navigation`; strict-concurrency
-diagnostics, fixtures, and parameterized tests to `swift-concurrency` or `swift-testing`.
+Boundary-split answers should use one `swift-architecture` bucket for
+pattern/module/dependency/migration/test-strategy decisions. Do not add a
+separate architecture-owned "SwiftUI state ownership" bucket; property-wrapper,
+local binding, navigation, concurrency-diagnostic, fixture, and parameterized
+test mechanics are sibling-skill handoffs.
 
 ### Decision Framework
 
@@ -482,7 +481,7 @@ in a `Reducer`, migrate its dependencies to `@Dependency`, and test.
 ## Review Checklist
 
 - [ ] Architecture choice is justified by feature complexity and team needs
-- [ ] UI-observed `@Observable` app state is isolated to `@MainActor` for Swift 6 data-race safety; migration distinguishes `@State`, plain injection, and `@Bindable`
+- [ ] Architecture identifies the model/store owner; `@State`, plain injection, and `@Bindable` wiring hand off to `swiftui-patterns`
 - [ ] Dependencies are injected, not created internally (testability)
 - [ ] SwiftUI MV mechanics, `NavigationSplitView`, strict-concurrency diagnostics, fixtures, and parameterized tests hand off to sibling skills explicitly
 - [ ] State mutations happen in a clear, auditable location
