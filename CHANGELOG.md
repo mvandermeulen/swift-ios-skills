@@ -4,6 +4,7 @@
 
 ### Skill updates
 
+- `swift-formatstyle` — Correct Decimal, URL, relative-date, and anchored-relative availability guidance; strengthen ParseableFormatStyle and locale-preview review guidance; add local/root eval coverage.
 - `push-notifications` — Correct APNs registration vs notification authorization guidance, avoid local device-token caching, add background push headers/throttling, fix rich-notification extension setup, and add local/root eval coverage.
 - `swift-charts` — Add iOS 26 `Chart3D`/`SurfacePlot` coverage, correct `chartAngleSelection` category mapping guidance, and add local/root eval coverage.
 - `swift-language` — Correct `Never`, opaque parameter, `@c`, and RegexBuilder reference guidance, align the README catalog with the skill scope, and add local/root eval coverage.

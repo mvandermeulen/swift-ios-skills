@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the solver preserves the boundary between swift-formatstyle and ios-localization while still treating locale-sensitive formatting as localization-relevant QA.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Custom formatting",
+      "description": "Routes custom FormatStyle work for domain-specific display to swift-formatstyle.",
+      "max_score": 10
+    },
+    {
+      "name": "Parseable counts",
+      "description": "Routes editable or imported follower-count parsing with ParseableFormatStyle or parse strategies to swift-formatstyle.",
+      "max_score": 10
+    },
+    {
+      "name": "Date intervals",
+      "description": "Routes Date.IntervalFormatStyle or date-range formatting design to swift-formatstyle.",
+      "max_score": 10
+    },
+    {
+      "name": "URL display",
+      "description": "Routes URL.FormatStyle display design to swift-formatstyle unless the request is primarily broader localization QA.",
+      "max_score": 10
+    },
+    {
+      "name": "Number currency",
+      "description": "Routes price, number, percent, or currency FormatStyle choices to swift-formatstyle.",
+      "max_score": 10
+    },
+    {
+      "name": "Locale testing",
+      "description": "Says user-facing formatted output still needs representative locale preview or testing even without translation.",
+      "max_score": 10
+    },
+    {
+      "name": "No skip claim",
+      "description": "Does not use the lack of current translation work as a reason to skip localization-sensitive review.",
+      "max_score": 10
+    },
+    {
+      "name": "Catalogs routed",
+      "description": "Routes String Catalogs, bundles, plurals, localized copy, or similar text-resource work to ios-localization.",
+      "max_score": 10
+    },
+    {
+      "name": "RTL routed",
+      "description": "Routes right-to-left layout review or broad layout localization concerns to ios-localization.",
+      "max_score": 10
+    },
+    {
+      "name": "Routed checklist",
+      "description": "Presents a clear routed checklist instead of assigning the whole backlog to one skill.",
+      "max_score": 10
+    }
+  ]
+}

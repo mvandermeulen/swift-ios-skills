@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the solver applies swift-formatstyle guidance for exact decimal currency display and parsing in an iOS finance screen.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Decimal style",
+      "description": "Uses Decimal formatting with a currency FormatStyle or equivalent Decimal.FormatStyle path for the amount.",
+      "max_score": 14
+    },
+    {
+      "name": "No binary conversion",
+      "description": "Does not convert the Decimal value through Double, Float, or another binary floating-point type for display or parsing.",
+      "max_score": 10
+    },
+    {
+      "name": "Currency code",
+      "description": "Uses an ISO 4217 currency code such as USD rather than hardcoding a currency symbol.",
+      "max_score": 10
+    },
+    {
+      "name": "Parseable style",
+      "description": "Shows or describes parsing the edited currency string back into Decimal with a matching FormatStyle or parse strategy.",
+      "max_score": 14
+    },
+    {
+      "name": "Round-trip convention",
+      "description": "Pairs formatting and parsing so the same currency and locale conventions are used in both directions.",
+      "max_score": 10
+    },
+    {
+      "name": "SwiftUI format",
+      "description": "Uses Text(_:format:) or otherwise keeps the FormatStyle at the SwiftUI formatting boundary instead of preformatted interpolation.",
+      "max_score": 8
+    },
+    {
+      "name": "Locale QA",
+      "description": "Mentions checking locale-sensitive separators, currency placement, or parsing behavior in representative locales.",
+      "max_score": 10
+    },
+    {
+      "name": "Locale default",
+      "description": "Avoids hardcoding a locale unless the output is explicitly for a fixed import/export contract.",
+      "max_score": 8
+    },
+    {
+      "name": "No legacy formatter",
+      "description": "Does not recommend a new NumberFormatter-based implementation for this iOS 17 code path.",
+      "max_score": 8
+    },
+    {
+      "name": "Scoped ownership",
+      "description": "Keeps the cleanup scoped to FormatStyle/parsing while treating broader translation or String Catalog work as separate.",
+      "max_score": 8
+    }
+  ]
+}

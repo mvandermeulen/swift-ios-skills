@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the solver catches URL.FormatStyle defaults, iOS availability, and relative-date localization issues in SwiftUI display code.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "URL availability",
+      "description": "States that URL.FormatStyle is available for the iOS 16 target or requires iOS 16+.",
+      "max_score": 10
+    },
+    {
+      "name": "Default components",
+      "description": "States that default URL formatting includes scheme, host, and path.",
+      "max_score": 14
+    },
+    {
+      "name": "Omitted components",
+      "description": "States that default URL formatting omits at least query and port, and ideally fragment as well.",
+      "max_score": 10
+    },
+    {
+      "name": "Query opt-in",
+      "description": "Recommends explicitly opting into query display when query values must remain visible.",
+      "max_score": 10
+    },
+    {
+      "name": "Other URL parts",
+      "description": "Mentions explicitly opting into port or fragment display when those components are meaningful.",
+      "max_score": 8
+    },
+    {
+      "name": "No preserve claim",
+      "description": "Does not claim that URL.formatted() preserves all visible URL components by default.",
+      "max_score": 8
+    },
+    {
+      "name": "Relative standalone",
+      "description": "Warns that relative date output should be treated as standalone text for localized UI.",
+      "max_score": 14
+    },
+    {
+      "name": "No interpolation",
+      "description": "Replaces or discourages embedding the relative formatted result inside a larger English sentence.",
+      "max_score": 10
+    },
+    {
+      "name": "SwiftUI date format",
+      "description": "Uses Text with a date format/style or a separate localized label/value structure instead of a preformatted relative string interpolation.",
+      "max_score": 8
+    },
+    {
+      "name": "Locale preview",
+      "description": "Mentions previewing or testing representative locales for the URL and relative-date display.",
+      "max_score": 8
+    }
+  ]
+}
