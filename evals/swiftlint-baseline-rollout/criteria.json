@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether SwiftLint rollout guidance uses baselines for existing violations, strict CI for new violations, and targeted suppression/configuration policies.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Baseline creation",
+      "description": "Creates an initial baseline with `swiftlint --write-baseline` or `write_baseline` and says to commit it for incremental adoption.",
+      "max_score": 20
+    },
+    {
+      "name": "Baseline CI enforcement",
+      "description": "Runs CI with `--baseline` and `--strict` or equivalent configuration so only new violations fail the build.",
+      "max_score": 20
+    },
+    {
+      "name": "Baseline burn-down",
+      "description": "Recommends reducing the baseline over time by fixing legacy violations and regenerating the baseline in cleanup PRs.",
+      "max_score": 12
+    },
+    {
+      "name": "Targeted suppressions",
+      "description": "Recommends targeted `swiftlint:disable` suppressions with reasons and avoids blanket `all` suppressions except as a last resort.",
+      "max_score": 18
+    },
+    {
+      "name": "Generated code exclusion",
+      "description": "Prefers `.swiftlint.yml` `excluded` paths for generated or vendored code rather than inline disables.",
+      "max_score": 14
+    },
+    {
+      "name": "Tests stay linted",
+      "description": "Recommends a relaxed child `.swiftlint.yml` for tests instead of excluding the whole test suite.",
+      "max_score": 16
+    }
+  ]
+}
