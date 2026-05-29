@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent keeps Core Animation bridge guidance source-grounded and avoids obsolete SwiftUI timing claims.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "SwiftUI cubic timing",
+      "description": "States that SwiftUI can express cubic Bezier timing with `UnitCurve.bezier` and `Animation.timingCurve(_:duration:)` for view animations.",
+      "max_score": 25
+    },
+    {
+      "name": "Appropriate CA boundary",
+      "description": "Reserves Core Animation for CALayer-specific properties, additive animations, path animations, display-link drawing, or direct layer manipulation.",
+      "max_score": 20
+    },
+    {
+      "name": "Frame-rate hints",
+      "description": "Explains that ProMotion frame-rate requests are hints, not guarantees, and the app must adapt to system-selected refresh rates.",
+      "max_score": 25
+    },
+    {
+      "name": "Coordinator delegate",
+      "description": "Uses the `UIViewRepresentable` Coordinator as the `CAAnimationDelegate` and does not use `uiView.next` as the delegate.",
+      "max_score": 20
+    },
+    {
+      "name": "Display link lifecycle",
+      "description": "Includes lifecycle guidance such as invalidating `CADisplayLink` when not needed and avoiding unnecessary display links.",
+      "max_score": 10
+    }
+  ]
+}

@@ -576,35 +576,41 @@ phase.isIdentity  // true when fully presented
 
 ## All Symbol Effect Types
 
+Availability: `.bounce`, `.pulse`, `.variableColor`, `.scale`, `.appear`,
+`.disappear`, and `.replace` are iOS 17+. `.wiggle`, `.breathe`, and `.rotate`
+are iOS 18+.
+
 ### Discrete Effects (trigger with `value:`)
 
-| Effect | Scope | Direction |
-|---|---|---|
-| `.bounce` | `.byLayer`, `.wholeSymbol` | -- |
-| `.wiggle` | `.byLayer`, `.wholeSymbol` | `.up`, `.down`, `.left`, `.right`, `.forward`, `.backward`, `.clockwise`, `.counterClockwise`, `.custom(angle:)` |
+| Effect | Availability | Scope | Direction |
+|---|---|---|---|
+| `.bounce` | iOS 17+ | `.byLayer`, `.wholeSymbol` | -- |
+| `.wiggle` | iOS 18+ | `.byLayer`, `.wholeSymbol` | `.up`, `.down`, `.left`, `.right`, `.forward`, `.backward`, `.clockwise`, `.counterClockwise`, `.custom(angle:)` |
 
 ```swift
 Image(systemName: "bell.fill")
     .symbolEffect(.bounce.byLayer, value: count)
 
+// iOS 18+
 Image(systemName: "arrow.left.arrow.right")
     .symbolEffect(.wiggle.left, value: swapCount)
 ```
 
 ### Indefinite Effects (toggle with `isActive:`)
 
-| Effect | Scope | Direction |
-|---|---|---|
-| `.pulse` | `.byLayer`, `.wholeSymbol` | -- |
-| `.variableColor` | `.byLayer`, `.wholeSymbol` | Chaining: `.cumulative`/`.iterative`, `.reversing`/`.nonReversing`, `.dimInactiveLayers`/`.hideInactiveLayers` |
-| `.scale` | `.byLayer`, `.wholeSymbol` | `.up`, `.down` |
-| `.breathe` | `.byLayer`, `.wholeSymbol` | -- |
-| `.rotate` | `.byLayer`, `.wholeSymbol` | `.clockwise`, `.counterClockwise` |
+| Effect | Availability | Scope | Direction |
+|---|---|---|---|
+| `.pulse` | iOS 17+ | `.byLayer`, `.wholeSymbol` | -- |
+| `.variableColor` | iOS 17+ | `.byLayer`, `.wholeSymbol` | Chaining: `.cumulative`/`.iterative`, `.reversing`/`.nonReversing`, `.dimInactiveLayers`/`.hideInactiveLayers` |
+| `.scale` | iOS 17+ | `.byLayer`, `.wholeSymbol` | `.up`, `.down` |
+| `.breathe` | iOS 18+ | `.byLayer`, `.wholeSymbol` | -- |
+| `.rotate` | iOS 18+ | `.byLayer`, `.wholeSymbol` | `.clockwise`, `.counterClockwise` |
 
 ```swift
 Image(systemName: "wifi")
     .symbolEffect(.pulse.byLayer, isActive: isConnecting)
 
+// iOS 18+
 Image(systemName: "gear")
     .symbolEffect(.rotate.clockwise, isActive: isProcessing)
 
@@ -618,6 +624,7 @@ Image(systemName: "speaker.wave.3.fill")
 Image(systemName: "magnifyingglass")
     .symbolEffect(.scale.up, isActive: isHighlighted)
 
+// iOS 18+
 Image(systemName: "heart.fill")
     .symbolEffect(.breathe, isActive: isFavorite)
 ```
@@ -820,6 +827,6 @@ ChildView()
 ### Profile with Instruments
 
 Use the Core Animation instrument in Xcode Instruments to verify:
-- Frame rate stays at 120 fps (ProMotion devices) or 60 fps.
+- The chosen sustainable target frame rate has no avoidable dropped frames; refresh rates are system-managed hints, not guarantees.
 - No offscreen rendering passes.
 - GPU utilization stays reasonable during animations.

@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent corrects SwiftUI SF Symbol variable-value API guidance and symbol effect availability.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Rejects nonexistent API",
+      "description": "Does not recommend `.symbolVariableColor(value:)` and explicitly corrects that draft guidance.",
+      "max_score": 20
+    },
+    {
+      "name": "Uses variableValue initializer",
+      "description": "Uses `Image(systemName:variableValue:)` with a 0.0...1.0 value for variable SF Symbol values.",
+      "max_score": 25
+    },
+    {
+      "name": "Mentions variable value mode",
+      "description": "Mentions `symbolVariableValueMode(_:)` as the iOS 26 way to control variable value rendering mode when appropriate.",
+      "max_score": 15
+    },
+    {
+      "name": "Separates availability",
+      "description": "Marks `.breathe`, `.rotate`, and `.wiggle` as iOS 18+ and does not group them as iOS 17-only effects.",
+      "max_score": 25
+    },
+    {
+      "name": "Reduce Motion",
+      "description": "Includes a Reduce Motion caveat such as disabling or simplifying repeating/active symbol effects with `symbolEffectsRemoved` or equivalent handling.",
+      "max_score": 15
+    }
+  ]
+}

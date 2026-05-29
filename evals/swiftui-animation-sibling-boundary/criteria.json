@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent preserves SwiftUI animation skill boundaries while giving useful animation guidance.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Scoped animation ownership",
+      "description": "Says the animation skill owns replacing broad `.animation(.default)` with scoped `.animation(_:body:)`, `.animation(_:value:)`, or explicit `withAnimation` where appropriate.",
+      "max_score": 25
+    },
+    {
+      "name": "Content transition example",
+      "description": "Shows `contentTransition(.numericText(...))` paired with an explicit or value-bound animation for the numeric score.",
+      "max_score": 20
+    },
+    {
+      "name": "Shared-element boundary",
+      "description": "Keeps shared-element guidance to matched geometry or navigation zoom animation hookup without implementing full navigation architecture.",
+      "max_score": 15
+    },
+    {
+      "name": "Sibling routing",
+      "description": "Routes detailed NavigationStack/deep-link work to `swiftui-navigation` and custom grid/layout details to `swiftui-layout-components`.",
+      "max_score": 25
+    },
+    {
+      "name": "Profiling boundary",
+      "description": "Routes broader GPU/layout profiling to a debugging or Instruments-focused skill and avoids turning the answer into a full profiling workflow.",
+      "max_score": 15
+    }
+  ]
+}

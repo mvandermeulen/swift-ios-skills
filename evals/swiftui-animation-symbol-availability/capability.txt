@@ -1,0 +1,1 @@
+SwiftUI SF Symbol animation variable-value and availability correction
