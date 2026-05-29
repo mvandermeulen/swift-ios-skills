@@ -8,6 +8,7 @@
 - `swift-charts` — Add iOS 26 `Chart3D`/`SurfacePlot` coverage, correct `chartAngleSelection` category mapping guidance, and add local/root eval coverage.
 - `swift-language` — Correct `Never`, opaque parameter, `@c`, and RegexBuilder reference guidance, align the README catalog with the skill scope, and add local/root eval coverage.
 - `swift-api-design-guidelines` — Tighten mutating/nonmutating pair guidance around direct-object `-ing` forms and add local/root eval coverage for API naming, documentation comments, and sibling-boundary routing.
+- `swiftlint` — Correct SwiftLint command-plugin analyze guidance, tighten build tool plugin and config-discovery caveats, and add local/root eval coverage for plugin setup, baseline rollout, and sibling-boundary routing.
 - `speech-recognition` — Correct SpeechAnalyzer/SpeechTranscriber iOS 26 guidance, remove unsupported preset usage, add SpeechAnalyzer progressive-disclosure reference material, and add local eval coverage.
 - `swiftui-gestures` — Correct gesture precedence and `DragGesture.Value.velocity` availability guidance, clarify sibling-skill boundaries, and add local/root eval coverage.
 

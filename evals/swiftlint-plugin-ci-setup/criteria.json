@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether SwiftLint setup guidance uses the current SwiftLintPlugins build tool plugin path locally while using direct CLI reporting in CI and preserving plugin trust caveats.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "SwiftLintPlugins default",
+      "description": "Uses `https://github.com/SimplyDanny/SwiftLintPlugins` and `SwiftLintBuildToolPlugin` as the recommended local build integration.",
+      "max_score": 20
+    },
+    {
+      "name": "Version pinning",
+      "description": "Says the package version should be pinned exactly or deliberately reviewed so SwiftLint behavior does not drift unexpectedly.",
+      "max_score": 12
+    },
+    {
+      "name": "Per-target application",
+      "description": "States that the build tool plugin must be added to each SwiftPM or Xcode target that should be linted.",
+      "max_score": 14
+    },
+    {
+      "name": "Trust prompt and CI validation",
+      "description": "Mentions the Xcode package plugin trust prompt and warns that `-skipPackagePluginValidation` and `-skipMacroValidation` bypass validation or implicitly trust plugins/macros in unattended builds.",
+      "max_score": 20
+    },
+    {
+      "name": "SARIF via direct CLI",
+      "description": "Uses a direct SwiftLint CLI command such as `swiftlint --strict --reporter sarif > swiftlint.sarif` plus SARIF upload for GitHub Actions reporting.",
+      "max_score": 18
+    },
+    {
+      "name": "Plugin limitations",
+      "description": "Does not claim the build tool plugin can accept arbitrary CLI flags, produce CI-only reporter output, or run `--fix` as a build tool plugin.",
+      "max_score": 16
+    }
+  ]
+}

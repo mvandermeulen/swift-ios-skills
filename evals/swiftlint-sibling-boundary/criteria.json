@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether SwiftLint guidance handles lint configuration while routing API design and Swift type-system questions to sibling domains.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "API design route",
+      "description": "Routes public API naming and argument-label clarity for `fetchDataWithId(_:)` to Swift API Design Guidelines or the API-design domain.",
+      "max_score": 18
+    },
+    {
+      "name": "Minimal API example",
+      "description": "Gives a minimal corrected API naming example such as `fetchData(id:)`, `fetchData(withID:)`, or a domain-specific role label.",
+      "max_score": 12
+    },
+    {
+      "name": "Language route",
+      "description": "Routes `some` vs `any` protocol return-type guidance to Swift language/type-system guidance rather than SwiftLint.",
+      "max_score": 18
+    },
+    {
+      "name": "No type tutorial",
+      "description": "Does not expand into a full opaque/existential type tutorial.",
+      "max_score": 10
+    },
+    {
+      "name": "SwiftLint route",
+      "description": "Routes identifier naming and sorted import enforcement to SwiftLint configuration.",
+      "max_score": 18
+    },
+    {
+      "name": "Minimal lint snippet",
+      "description": "Provides only a minimal SwiftLint snippet for `identifier_name` and `sorted_imports` rather than a full setup guide.",
+      "max_score": 14
+    },
+    {
+      "name": "Boundary preserved",
+      "description": "Clearly separates SwiftLint enforcement from API design and Swift language ownership.",
+      "max_score": 10
+    }
+  ]
+}
