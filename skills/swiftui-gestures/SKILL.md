@@ -9,6 +9,15 @@ Review, write, and fix SwiftUI gesture interactions. Apply modern gesture APIs
 with correct composition, state management, and conflict resolution using
 Swift 6.3 patterns.
 
+**Scope boundary:** This skill owns SwiftUI gesture recognition, composition,
+gesture state, and gesture-specific accessibility alternatives. Broader
+SwiftUI architecture/state ownership belongs in `swiftui-patterns`; list,
+scroll, form, and control layout belongs in `swiftui-layout-components`; broad
+UIKit bridging belongs in `swiftui-uikit-interop`.
+
+When correcting Apple API availability, deprecation, or behavior claims, cite
+the relevant Sosumi or official Apple documentation URL in the response.
+
 ## Contents
 
 - [Gesture Overview](#gesture-overview)
@@ -89,6 +98,9 @@ Shorthand: `.onLongPressGesture(minimumDuration:perform:onPressingChanged:)`.
 
 Tracks finger movement. `Value` provides `startLocation`, `location`,
 `translation`, `velocity`, and `predictedEndTranslation`.
+`DragGesture.Value.velocity` is available with `DragGesture` from iOS 13+;
+do not confuse it with iOS 17+ gesture types such as `MagnifyGesture` and
+`RotateGesture`.
 
 ```swift
 @State private var offset = CGSize.zero
@@ -259,24 +271,28 @@ Three modifiers control gesture priority in the view hierarchy:
 
 | Modifier | Behavior |
 |---|---|
-| `.gesture()` | Default priority. Child gestures win over parent. |
-| `.highPriorityGesture()` | Parent gesture takes precedence over child. |
-| `.simultaneousGesture()` | Both parent and child gestures fire. |
+| `.gesture()` | Lower precedence than gestures already defined by the view or its children. |
+| `.highPriorityGesture()` | Added gesture takes precedence over existing gestures. |
+| `.simultaneousGesture()` | Added gesture processes at the same priority as existing gestures. |
 
 ```swift
-// Problem: parent tap swallows child tap
+// Default: the child tap wins on the image; the parent handles empty stack space.
 VStack {
-    Button("Child") { handleChild() }  // never fires
+    Image(systemName: "star.fill")
+        .onTapGesture { handleChild() }
+
+    Rectangle().fill(.blue)
 }
 .gesture(TapGesture().onEnded { handleParent() })
 
-// Fix 1: Use simultaneousGesture on parent
+// Use simultaneousGesture when both handlers should run on child content.
 VStack {
-    Button("Child") { handleChild() }
+    Image(systemName: "star.fill")
+        .onTapGesture { handleChild() }
 }
 .simultaneousGesture(TapGesture().onEnded { handleParent() })
 
-// Fix 2: Give parent explicit priority
+// Use highPriorityGesture only when the parent should win.
 VStack {
     Text("Child")
         .gesture(TapGesture().onEnded { handleChild() })
@@ -292,6 +308,7 @@ Control which gestures participate when using `.gesture(_:including:)`:
 .gesture(drag, including: .gesture)   // only this gesture, not subviews
 .gesture(drag, including: .subviews)  // only subview gestures
 .gesture(drag, including: .all)       // default: this + subviews
+.gesture(drag, including: .none)      // disable both
 ```
 
 ## Custom Gesture Protocol
@@ -338,20 +355,24 @@ extension View {
 
 ## Common Mistakes
 
-### 1. Conflicting parent/child gestures
+### 1. Misreading parent/child gesture precedence
 
 ```swift
-// DON'T: Parent .gesture() conflicts with child tap
+// DON'T: Assume parent .gesture() overrides the child tap
 VStack {
-    Button("Action") { doSomething() }
+    Image(systemName: "star.fill")
+        .onTapGesture { childAction() }
 }
 .gesture(TapGesture().onEnded { parentAction() })
 
-// DO: Use .simultaneousGesture() or .highPriorityGesture()
+// DO: Pick the relationship explicitly
 VStack {
-    Button("Action") { doSomething() }
+    Image(systemName: "star.fill")
+        .onTapGesture { childAction() }
 }
 .simultaneousGesture(TapGesture().onEnded { parentAction() })
+
+// Or use .highPriorityGesture() when the parent should take precedence.
 ```
 
 ### 2. Using `@State` instead of `@GestureState` for transient state
@@ -460,11 +481,12 @@ has appropriate accessibility traits.
 
 ## References
 
-- See [references/gesture-patterns.md](references/gesture-patterns.md) for drag-to-reorder, pinch-to-zoom, combined rotate+scale, velocity calculations, and SwiftUI/UIKit gesture interop.
+- Read [references/gesture-patterns.md](references/gesture-patterns.md) when the task needs full drag-to-reorder, pinch-to-zoom, combined rotate+scale, velocity/projection, sequenced gesture state-machine, or gesture-specific UIKit interop examples.
 - [Gesture protocol](https://sosumi.ai/documentation/swiftui/gesture)
 - [TapGesture](https://sosumi.ai/documentation/swiftui/tapgesture)
 - [LongPressGesture](https://sosumi.ai/documentation/swiftui/longpressgesture)
 - [DragGesture](https://sosumi.ai/documentation/swiftui/draggesture)
+- [DragGesture.Value.velocity](https://sosumi.ai/documentation/swiftui/draggesture/value/velocity)
 - [MagnifyGesture](https://sosumi.ai/documentation/swiftui/magnifygesture)
 - [RotateGesture](https://sosumi.ai/documentation/swiftui/rotategesture)
 - [GestureState](https://sosumi.ai/documentation/swiftui/gesturestate)

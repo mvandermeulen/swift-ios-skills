@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent preserves the swiftui-gestures boundary while applying accessibility guidance for gesture-only interactions.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Gesture scope",
+      "description": "Keeps tap, drag, swipe recognition, gesture composition, GestureState, and gesture-specific accessibility alternatives in the swiftui-gestures scope.",
+      "max_score": 25
+    },
+    {
+      "name": "Button for plain actions",
+      "description": "Recommends Button or ButtonStyle for plain single-tap actions such as delete instead of onTapGesture-only controls.",
+      "max_score": 20
+    },
+    {
+      "name": "Accessible alternatives",
+      "description": "Requires accessible alternatives such as accessibility actions for drag, swipe, or gesture-only interactions.",
+      "max_score": 20
+    },
+    {
+      "name": "Layout handoff",
+      "description": "Routes grid/list/layout cleanup to swiftui-layout-components.",
+      "max_score": 15
+    },
+    {
+      "name": "Navigation and state handoff",
+      "description": "Routes navigation routing and destination modeling to swiftui-navigation, and broad state architecture to swiftui-patterns.",
+      "max_score": 20
+    }
+  ]
+}

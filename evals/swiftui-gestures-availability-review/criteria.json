@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent corrects stale SwiftUI gesture API and availability claims using official Apple/Sosumi sources.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "MagnifyGesture modernization",
+      "description": "Recommends MagnifyGesture instead of MagnificationGesture for iOS 17+ pinch/magnification work.",
+      "max_score": 20
+    },
+    {
+      "name": "RotateGesture modernization",
+      "description": "Recommends RotateGesture instead of RotationGesture for iOS 17+ rotation work.",
+      "max_score": 20
+    },
+    {
+      "name": "Drag velocity availability",
+      "description": "Does not claim DragGesture.Value.velocity is iOS 17-only; identifies it as available on the same iOS 13+ baseline as DragGesture.Value.",
+      "max_score": 25
+    },
+    {
+      "name": "UIKit gesture interop availability",
+      "description": "Identifies UIGestureRecognizerRepresentable as iOS 18+ and limits it to UIKit gesture recognizer interop.",
+      "max_score": 20
+    },
+    {
+      "name": "Official source grounding",
+      "description": "Uses Sosumi or official Apple documentation URLs when citing Apple API availability.",
+      "max_score": 15
+    }
+  ]
+}

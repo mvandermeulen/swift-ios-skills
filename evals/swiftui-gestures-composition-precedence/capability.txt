@@ -1,0 +1,1 @@
+Resolve SwiftUI gesture composition conflicts with accurate .gesture, .simultaneousGesture, .highPriorityGesture, and GestureMask precedence guidance.

@@ -1,0 +1,1 @@
+Review and correct SwiftUI gesture API modernization and availability guidance for MagnifyGesture, RotateGesture, DragGesture.Value, and gesture recognizer interop.

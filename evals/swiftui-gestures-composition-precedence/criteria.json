@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent gives source-accurate SwiftUI gesture precedence and GestureMask guidance without over-expanding into sibling skills.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Default precedence",
+      "description": "States that .gesture attaches with lower precedence than gestures already defined by the view or its children, rather than saying it always swallows child gestures.",
+      "max_score": 25
+    },
+    {
+      "name": "Simultaneous handling",
+      "description": "Explains .simultaneousGesture as the choice when parent and child handlers should both process the same interaction.",
+      "max_score": 15
+    },
+    {
+      "name": "High priority handling",
+      "description": "Explains .highPriorityGesture as the choice when the added parent gesture should take precedence over existing gestures.",
+      "max_score": 15
+    },
+    {
+      "name": "GestureMask accuracy",
+      "description": "Describes GestureMask .gesture, .subviews, .all, and .none in terms of enabling the added gesture and/or subview hierarchy gestures.",
+      "max_score": 30
+    },
+    {
+      "name": "Sibling boundaries",
+      "description": "Keeps the answer focused on gesture conflict resolution and does not turn the task into broader navigation, layout, or architecture guidance.",
+      "max_score": 15
+    }
+  ]
+}
