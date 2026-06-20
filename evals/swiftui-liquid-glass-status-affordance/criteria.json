@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent distinguishes read-only status from Liquid Glass toolbar controls.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Status classification",
+      "description": "Classifies the leading count as read-only status rather than a toolbar command or standalone action.",
+      "max_score": 20
+    },
+    {
+      "name": "Toolbar boundary",
+      "description": "Recommends moving the count out of a toolbar/control slot unless a real action is added.",
+      "max_score": 20
+    },
+    {
+      "name": "No false affordance",
+      "description": "Avoids Button, NavigationLink, gestures, or interactive Liquid Glass treatment for the read-only count.",
+      "max_score": 25
+    },
+    {
+      "name": "Accessibility semantics",
+      "description": "Provides status-style accessibility labeling or values without exposing button semantics for the count.",
+      "max_score": 20
+    },
+    {
+      "name": "Verification",
+      "description": "Calls for visual or UI automation verification that the count does not react as a tappable target.",
+      "max_score": 15
+    }
+  ]
+}

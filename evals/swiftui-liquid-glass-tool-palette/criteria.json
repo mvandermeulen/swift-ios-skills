@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent uses the custom Liquid Glass container and transition APIs correctly for grouped controls.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Single container",
+      "description": "Uses one GlassEffectContainer for the related palette group instead of nested per-item containers.",
+      "max_score": 20
+    },
+    {
+      "name": "Button styles",
+      "description": "Uses SwiftUI glass button styles for actual icon controls rather than manually adding interactive glass to Buttons.",
+      "max_score": 20
+    },
+    {
+      "name": "Morphing IDs",
+      "description": "Uses glassEffectID with a Namespace for hierarchy changes and uses Sendable identifiers.",
+      "max_score": 25
+    },
+    {
+      "name": "Transition choice",
+      "description": "Mentions matched geometry for nearby palette morphing or materialize for distant insertion/removal.",
+      "max_score": 15
+    },
+    {
+      "name": "Modifier and availability",
+      "description": "Applies glass effects after layout/appearance modifiers and includes iOS 26 availability fallback guidance.",
+      "max_score": 20
+    }
+  ]
+}

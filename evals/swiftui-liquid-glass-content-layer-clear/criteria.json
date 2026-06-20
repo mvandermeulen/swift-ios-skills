@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent avoids decorative Liquid Glass in the content layer and handles clear glass legibility.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Content layer boundary",
+      "description": "Warns against using Liquid Glass as decoration for the static chart or card.",
+      "max_score": 25
+    },
+    {
+      "name": "Action target",
+      "description": "Treats the Play button as the actionable element that may receive glass styling.",
+      "max_score": 20
+    },
+    {
+      "name": "Configurable button",
+      "description": "Uses or names the configurable SwiftUI glass button style when a clear glass button variant is needed.",
+      "max_score": 20
+    },
+    {
+      "name": "Clear legibility",
+      "description": "Requires dimming, contrast treatment, or verification when clear glass appears over a bright or rich background.",
+      "max_score": 20
+    },
+    {
+      "name": "Availability fallback",
+      "description": "Includes iOS 26 availability gating or a fallback treatment for earlier systems.",
+      "max_score": 15
+    }
+  ]
+}

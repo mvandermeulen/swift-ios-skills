@@ -1,0 +1,1 @@
+Static status and toolbar affordance boundaries
