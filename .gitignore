@@ -15,6 +15,9 @@ firebase-debug.log
 .tessl/
 
 # AgentSkills/skill-creator generated eval run artifacts.
+.eval-workspaces/
+
+# Legacy sibling workspaces from older apple-skill-audit runs.
 skills/*-workspace/
 
 # Keep only source eval definitions beside skills; generated scenario staging stays local.
