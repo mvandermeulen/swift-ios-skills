@@ -1,5 +1,5 @@
 {
-  "context": "",
+  "context": "Tests whether the agent handles App Clip data handoff, ephemeral notifications, keychain direction, Sign in with Apple migration, and location confirmation boundaries.",
   "type": "weighted_checklist",
   "checklist": [
     {

@@ -1,5 +1,5 @@
 {
-  "context": "",
+  "context": "Tests whether the agent keeps App Clip guidance within size, capability, and sibling-skill boundaries for an App Clip feasibility review.",
   "type": "weighted_checklist",
   "checklist": [
     {

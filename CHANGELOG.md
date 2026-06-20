@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Repository
+
+- Migrate Tessl packaging from deprecated root `tile.json` to `.tessl-plugin/plugin.json`; keep the same 84-skill bundle via explicit skill paths and retain `README.md` as the external public catalog.
+
 ### Skill updates
 
 - `swift-formatstyle` — Correct Decimal, URL, relative-date, and anchored-relative availability guidance; strengthen ParseableFormatStyle and locale-preview review guidance; add local/root eval coverage.
@@ -12,6 +16,7 @@
 - `swiftlint` — Correct SwiftLint command-plugin analyze guidance, tighten build tool plugin and config-discovery caveats, and add local/root eval coverage for plugin setup, baseline rollout, and sibling-boundary routing.
 - `speech-recognition` — Correct SpeechAnalyzer/SpeechTranscriber iOS 26 guidance, remove unsupported preset usage, add SpeechAnalyzer progressive-disclosure reference material, and add local eval coverage.
 - `swiftui-gestures` — Correct gesture precedence and `DragGesture.Value.velocity` availability guidance, clarify sibling-skill boundaries, and add local/root eval coverage.
+- `app-clips` — Fill missing root eval `context` fields so Tessl plugin publish dry-runs validate retained scenarios.
 
 ## v3.5.0
 
