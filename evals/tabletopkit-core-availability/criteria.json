@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the TabletopKit skill guides a core board-game setup while preserving current API availability boundaries.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Platform scope",
+      "description": "States that TabletopKit is visionOS-only and distinguishes core visionOS 2.0+ APIs from later availability-gated APIs.",
+      "max_score": 10
+    },
+    {
+      "name": "Core setup",
+      "description": "Uses TableSetup and TabletopGame with table, seats, and equipment for the basic board-game model without requiring custom action registration for the core path.",
+      "max_score": 12
+    },
+    {
+      "name": "Equipment model",
+      "description": "Models pieces, cards, or dice as TabletopKit equipment and uses TabletopAction-style state changes rather than ad hoc shared mutable state.",
+      "max_score": 10
+    },
+    {
+      "name": "Interaction configuration availability",
+      "description": "Identifies TabletopInteraction.Configuration as a visionOS 2.2+ API and provides a safe fallback or availability check for visionOS 2.0/2.1 targets.",
+      "max_score": 12
+    },
+    {
+      "name": "Avoids deprecated interaction APIs",
+      "description": "Avoids recommending gesturePhase, setAllowedDestinations, or value.allowedDestinations as the primary current interaction API.",
+      "max_score": 10
+    },
+    {
+      "name": "Custom API gate",
+      "description": "Gates CustomAction, CustomEquipmentState, TableSetup.register(action:), TabletopAction.customAction, and direct custom addAction usage to visionOS 26.0+.",
+      "max_score": 14
+    },
+    {
+      "name": "Seats and turns",
+      "description": "Covers player seats, seat restrictions, or turn ownership in a way that fits TabletopKit's seating/action model.",
+      "max_score": 8
+    },
+    {
+      "name": "RealityKit boundary",
+      "description": "Uses RealityKit/EntityEquipment or render delegates for visual representation while keeping TabletopKit game state authoritative.",
+      "max_score": 10
+    },
+    {
+      "name": "Multiplayer caveat",
+      "description": "Explains that Group Activities/SharePlay are needed for multiplayer synchronization and that the simulator is limited for multiplayer testing.",
+      "max_score": 8
+    },
+    {
+      "name": "Dice availability",
+      "description": "Mentions that newer dice toss outcome helpers such as onTossStart, TossOutcome, and face(for:) require visionOS 26.0+ if used.",
+      "max_score": 6
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the TabletopKit skill preserves boundaries between TabletopKit, RealityKit, Group Activities, and GameKit.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "TabletopKit authority",
+      "description": "Makes TabletopKit the authority for table layout, equipment state, player seats, turns, and game actions.",
+      "max_score": 14
+    },
+    {
+      "name": "RealityKit rendering",
+      "description": "Uses RealityKit, EntityEquipment, or render delegates for 3D presentation and updates without making RealityKit transforms the source of synchronized game truth.",
+      "max_score": 14
+    },
+    {
+      "name": "Group Activities sync",
+      "description": "Uses Group Activities/SharePlay for synchronous multiplayer coordination and mentions required capability/session wiring at an appropriate level.",
+      "max_score": 14
+    },
+    {
+      "name": "GameKit boundary",
+      "description": "Treats GameKit/Game Center as optional identity, matchmaking, achievements, or leaderboards rather than the primary TabletopKit game-state synchronization mechanism.",
+      "max_score": 12
+    },
+    {
+      "name": "Simulator caveat",
+      "description": "Notes that simulator testing is useful for single-player layout but not a substitute for FaceTime/Group Activities multiplayer testing.",
+      "max_score": 8
+    },
+    {
+      "name": "Observer and render flow",
+      "description": "Describes observing confirmed TabletopKit actions and updating rendered entities through delegates or equivalent render callbacks.",
+      "max_score": 10
+    },
+    {
+      "name": "Interaction availability",
+      "description": "Uses current interaction configuration guidance, including availability gating TabletopInteraction.Configuration to visionOS 2.2+ and avoiding deprecated interaction APIs.",
+      "max_score": 8
+    },
+    {
+      "name": "Dice and cards",
+      "description": "Mentions dice/card state or toss helpers with correct availability when recommending onTossStart, TossOutcome, or face(for:).",
+      "max_score": 8
+    },
+    {
+      "name": "No sibling overreach",
+      "description": "Does not turn the answer into a general SwiftUI navigation, ARKit, SceneKit, or GameKit-only design that bypasses TabletopKit.",
+      "max_score": 8
+    },
+    {
+      "name": "Review checklist",
+      "description": "Ends with a practical checklist for validating state authority, rendering, multiplayer, and availability boundaries.",
+      "max_score": 4
+    }
+  ]
+}

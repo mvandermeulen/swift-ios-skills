@@ -1,0 +1,1 @@
+TabletopKit custom actions and custom equipment state availability
