@@ -42,6 +42,20 @@
         "Routes detailed NavigationStack path/deep-link work to `swiftui-navigation`.",
         "Routes custom grid/layout implementation details to `swiftui-layout-components` and does not implement the sibling domains."
       ]
+    },
+    {
+      "id": 3,
+      "name": "phase-keyframe-sendable-review",
+      "prompt": "Review this SwiftUI animation note: `PhaseAnimator(phases, trigger: tapCount)` runs through every phase once each time `tapCount` changes, and Swift 6 code can freely read `@State` from nested helper closures inside `keyframeAnimator`. Correct the note and give minimal alternatives.",
+      "expected_output": "A correction that says trigger-based PhaseAnimator advances to the next phase per trigger change rather than playing a full one-shot cycle, suggests KeyframeAnimator or explicit phase state for a full tap-triggered timeline, and handles Swift 6 @Sendable keyframe closures by capturing state/environment values before the modifier or passing values through the animated model.",
+      "files": [],
+      "assertions": [
+        "Corrects trigger-based `PhaseAnimator` semantics to one phase advance per trigger change, not a full cycle.",
+        "Suggests `KeyframeAnimator` or explicit phase state when a full tap-triggered sequence is required.",
+        "Mentions Swift 6 `@Sendable` closure constraints for `keyframeAnimator` content/keyframe closures.",
+        "Avoids direct `@State`/`@Environment` reads inside nested helper closures by capturing plain values before the modifier or passing values through the animated value model.",
+        "Keeps the response focused on SwiftUI animation instead of expanding into navigation or layout architecture."
+      ]
     }
   ]
 }

@@ -275,9 +275,11 @@ struct LoadingIndicator: View {
 }
 ```
 
-### Trigger-Based One-Shot
+### Trigger-Based Phase Advance
 
-Run through all phases once each time the trigger value changes.
+Each trigger change advances to the next phase. It does not run the full phase
+array as a one-shot sequence; use `KeyframeAnimator` or explicit phase state
+when each tap should play a complete timeline.
 
 ```swift
 struct FeedbackDot: View {
@@ -288,7 +290,7 @@ struct FeedbackDot: View {
             Circle()
                 .frame(width: 20, height: 20)
                 .phaseAnimator(
-                    [false, true, false],
+                    [false, true],
                     trigger: feedbackTrigger
                 ) { content, phase in
                     content.scaleEffect(phase ? 1.5 : 1.0)
@@ -398,6 +400,13 @@ KeyframeAnimator(
 | `CubicKeyframe(value, duration:)` | Cubic bezier curve | Smooth easing |
 | `SpringKeyframe(value, duration:, spring:)` | Spring physics | Natural settle |
 | `MoveKeyframe(value)` | Instant jump | Reset to value immediately |
+
+### Swift 6 Sendable Closure Captures
+
+`keyframeAnimator` content and keyframe closures are `@Sendable`. In Swift 6,
+avoid direct reads of `@State` or `@Environment` from nested helper closures
+inside the modifier; capture plain values in `body` before the modifier or pass
+them through the animated value model.
 
 ### KeyframeTimeline for Manual Evaluation
 
@@ -645,7 +654,7 @@ Image(systemName: "xmark.circle")
 Image(systemName: isMuted ? "speaker.slash" : "speaker.wave.3")
     .contentTransition(.symbolEffect(.replace.downUp))
 
-// Magic replace (morphs between symbols)
+// Magic replace (iOS 18+, morphs between symbols)
 Image(systemName: isPlaying ? "pause.fill" : "play.fill")
     .contentTransition(.symbolEffect(.replace.magic(fallback: .downUp)))
 ```
@@ -813,6 +822,13 @@ ParentView()
     .scaleEffect(parentScale)
     .geometryGroup()  // children see stable geometry
 ```
+
+### Layout-Driven Height Changes
+
+`transition` describes child insertion/removal, but a `List` row's changing
+height may still snap instead of interpolate. Keep this skill focused on the
+animation trigger, curve, and Reduce Motion behavior; route custom row-height,
+grid, or layout interpolation work to `swiftui-layout-components`.
 
 ### Transaction for Selective Animation Override
 

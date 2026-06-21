@@ -155,7 +155,7 @@ struct PulsingDot: View {
 }
 ```
 
-Trigger-based variant runs one cycle per trigger change:
+Trigger-based variant advances to the next phase on each trigger change:
 
 ```swift
 PhaseAnimator(PulsePhase.allCases, trigger: tapCount) { phase in
@@ -213,6 +213,7 @@ Keyframe types: `LinearKeyframe` (linear), `CubicKeyframe` (smooth curve),
 `SpringKeyframe` (spring physics), `MoveKeyframe` (instant jump).
 
 Use `repeating: true` for looping keyframe animations.
+Swift 6: keyframe closures are `@Sendable`; capture state/env values before the modifier.
 
 ## `@Animatable` Macro
 
@@ -220,7 +221,6 @@ Replaces manual `AnimatableData` boilerplate. Attach to any type with
 animatable stored properties.
 
 ```swift
-// Replaces manual AnimatableData boilerplate
 @Animatable
 struct WaveShape: Shape {
     var frequency: Double
@@ -275,7 +275,7 @@ struct HeroView: View {
 }
 ```
 
-Exactly one view per ID must be visible at a time for the interpolation to work.
+Exactly one source view per ID should be visible; otherwise results are undefined.
 
 ## Navigation Zoom Transition (iOS 18+)
 
@@ -445,9 +445,9 @@ Image(systemName: "wifi", variableValue: signalStrength) // 0.0...1.0
 withAnimation(.easeIn) { isVisible.toggle() } // CORRECT: own mutation
 ```
 
-### 2. Expensive work inside animation closures
+### 2. Expensive work or actor-isolated reads inside animation closures
 
-Never run heavy computation in `keyframeAnimator` / `PhaseAnimator` content closures — they execute every frame. Precompute outside, animate only visual properties.
+`keyframeAnimator` / `PhaseAnimator` content closures run every frame. Precompute expensive values, animate only visual properties, and capture state/env values before `@Sendable` keyframe closures.
 
 ### 3. Missing reduce motion support
 
@@ -459,7 +459,7 @@ Image(systemName: "wifi").symbolEffect(.pulse, isActive: isSearching).symbolEffe
 
 ### 4. Multiple matchedGeometryEffect sources
 
-Only one view per ID should be visible at a time. Two visible views with the same ID causes undefined layout.
+Only one source view per ID should be visible at a time. Multiple visible sources with the same ID cause undefined layout.
 
 ### 5. Using DispatchQueue or UIView.animate
 

@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent corrects PhaseAnimator trigger semantics and Swift 6 keyframe closure capture guidance.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Phase trigger semantics",
+      "description": "States that trigger-based `PhaseAnimator` advances to the next phase on each trigger change and does not run the full phase array as a one-shot cycle.",
+      "max_score": 30
+    },
+    {
+      "name": "Full timeline alternative",
+      "description": "Suggests `KeyframeAnimator` or explicit phase/timer state for a full tap-triggered sequence rather than relying on trigger-based PhaseAnimator alone.",
+      "max_score": 25
+    },
+    {
+      "name": "Sendable closure warning",
+      "description": "Mentions Swift 6 `@Sendable` constraints on `keyframeAnimator` content/keyframe closures.",
+      "max_score": 20
+    },
+    {
+      "name": "Safe value capture",
+      "description": "Advises capturing plain state/environment values before the modifier or passing them through the animated value model instead of direct nested actor-isolated reads.",
+      "max_score": 15
+    },
+    {
+      "name": "Boundary control",
+      "description": "Keeps the answer focused on SwiftUI animation and avoids expanding into layout or navigation architecture.",
+      "max_score": 10
+    }
+  ]
+}

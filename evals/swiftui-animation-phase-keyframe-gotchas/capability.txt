@@ -1,0 +1,1 @@
+SwiftUI PhaseAnimator trigger semantics and KeyframeAnimator Swift 6 closure review
