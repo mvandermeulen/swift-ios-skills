@@ -1,0 +1,1 @@
+SwiftUI layout guidance for List, ScrollView, section jumps, and dynamic row expansion
