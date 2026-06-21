@@ -9,17 +9,17 @@
     },
     {
       "name": "Some guidance",
-      "description": "Uses some for generic parameters or opaque returns when one concrete type is preserved by the compiler.",
+      "description": "Uses some for opaque returns, or simple generic-parameter shorthand when relevant, when one concrete type is preserved by the compiler; does not require covering both forms.",
       "max_score": 12
     },
     {
       "name": "Any guidance",
-      "description": "Uses any for heterogeneous storage, dynamic type erasure, or runtime flexibility.",
+      "description": "Uses any for heterogeneous storage, existential/type-erased values, dynamic dispatch, or runtime flexibility.",
       "max_score": 12
     },
     {
       "name": "Never caveat",
-      "description": "Explains that Never is uninhabited or bottom-like only in appropriate expression/generic contexts and does not implicitly conform to arbitrary protocols.",
+      "description": "Explains that Never is uninhabited, is bottom-like in expression or inference contexts, and does not implicitly conform to arbitrary protocols; exhaustive type-theory taxonomy is not required.",
       "max_score": 18
     },
     {
@@ -34,12 +34,12 @@
     },
     {
       "name": "Naming route",
-      "description": "Routes public helper names, labels, and documentation-comment review to swift-api-design-guidelines when that work appears.",
+      "description": "Routes public helper names and labels to swift-api-design-guidelines when that work appears; documentation-comment review is optional unless requested.",
       "max_score": 8
     },
     {
       "name": "No sibling implementation",
-      "description": "May include concise sibling-owner examples or rules, but does not provide an end-to-end decoding pipeline, formatting matrix, localization plan, or complete API naming rewrite.",
+      "description": "May include concise sibling-owner hints or brief API examples, but does not provide an end-to-end decoding pipeline, formatting matrix, localization plan, mini review checklist, or complete API naming rewrite.",
       "max_score": 7
     }
   ]
