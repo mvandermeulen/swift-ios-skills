@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether the agent preserves the swiftui-uikit-interop boundary while routing PDFKit, WebKit, rich text, MessageUI, and hosted cell concerns correctly.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Interop scope",
+      "description": "Routes general UIViewRepresentable, UIViewControllerRepresentable, UIHostingController, MessageUI wrappers, and UIHostingConfiguration guidance to swiftui-uikit-interop.",
+      "max_score": 20
+    },
+    {
+      "name": "PDFKit handoff",
+      "description": "Routes PDFView, PDFDocument, annotations, thumbnails, page navigation, search, and PDF-specific behavior to pdfkit rather than expanding this skill into a PDFKit tutorial.",
+      "max_score": 15
+    },
+    {
+      "name": "WebKit handoff",
+      "description": "Routes native iOS 26 WebView/WebPage work to swiftui-webkit and does not recommend a WKWebView wrapper as the default for a web help center.",
+      "max_score": 15
+    },
+    {
+      "name": "Rich text default",
+      "description": "Mentions native iOS 26 SwiftUI TextEditor with AttributedString as the first choice for rich text editing, while keeping UITextView wrapping for UIKit-only control.",
+      "max_score": 10
+    },
+    {
+      "name": "Legacy controller wrappers",
+      "description": "Uses UIViewControllerRepresentable and coordinators for UIActivityViewController, MFMailComposeViewController, and MFMessageComposeViewController, with capability checks and dismissal callbacks.",
+      "max_score": 15
+    },
+    {
+      "name": "Hosted cell swipe actions",
+      "description": "States that UIHostingConfiguration can bridge SwiftUI swipeActions in list layouts, while UIKit swipe configuration remains appropriate when UIKit owns those actions.",
+      "max_score": 15
+    },
+    {
+      "name": "No sibling overreach",
+      "description": "Avoids PhotoKit, broad PDF internals, broad WebKit tutorials, or unrelated SwiftUI architecture guidance unless explicitly framed as sibling handoff.",
+      "max_score": 10
+    }
+  ]
+}

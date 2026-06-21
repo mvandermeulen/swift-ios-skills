@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent catches the coordinator parent refresh and state synchronization details for a UIViewRepresentable UIKit wrapper.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Coordinator parent refresh",
+      "description": "States that SwiftUI does not automatically update a coordinator's stored parent value and shows or recommends assigning context.coordinator.parent = self in updateUIView.",
+      "max_score": 25
+    },
+    {
+      "name": "Delegate placement",
+      "description": "Keeps UISearchBar delegate assignment in makeUIView instead of moving it to updateUIView.",
+      "max_score": 15
+    },
+    {
+      "name": "Guarded UIKit update",
+      "description": "Keeps or recommends guarding uiView.text writes so updateUIView does not cause redundant updates or delegate loops.",
+      "max_score": 15
+    },
+    {
+      "name": "UIKit-to-SwiftUI binding sync",
+      "description": "Adds or recommends UISearchBarDelegate text-change handling that writes user edits back into the SwiftUI binding.",
+      "max_score": 15
+    },
+    {
+      "name": "Stale copied state explanation",
+      "description": "Explains that the coordinator stores a copy of the representable and that copied closures or non-binding state can become stale without refresh, while bindings remain connected to their storage.",
+      "max_score": 20
+    },
+    {
+      "name": "Scoped interop answer",
+      "description": "Keeps the answer focused on representable lifecycle and coordinator communication, without broad unrelated UIKit or SwiftUI architecture work.",
+      "max_score": 10
+    }
+  ]
+}
