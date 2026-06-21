@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent avoids unavailable iOS sheet-dismissal guidance and recommends current SwiftUI sheet routing and sizing patterns.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Does not claim iOS dismissalConfirmationDialog",
+      "description": "Does not recommend dismissalConfirmationDialog as an iOS/iPadOS API for sheet dismissal confirmation.",
+      "max_score": 25
+    },
+    {
+      "name": "Uses interactiveDismissDisabled",
+      "description": "Uses interactiveDismissDisabled(_:) for iOS/iPadOS nonprogrammatic dismissal prevention when unsaved changes exist.",
+      "max_score": 20
+    },
+    {
+      "name": "Requires explicit iOS actions",
+      "description": "Requires explicit Save/Discard or confirmation UI inside the iOS/iPadOS sheet instead of relying on a missing system dismissal dialog.",
+      "max_score": 20
+    },
+    {
+      "name": "Uses presentationSizing",
+      "description": "Recommends presentationSizing(_:) values such as .form, .page, or .fitted instead of hard-coded sheet frames.",
+      "max_score": 15
+    },
+    {
+      "name": "Prefers enum sheet routing",
+      "description": "Prefers sheet(item:) with an Identifiable enum or similar model-backed routing over unrelated Boolean flags.",
+      "max_score": 20
+    }
+  ]
+}
