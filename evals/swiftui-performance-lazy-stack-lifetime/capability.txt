@@ -1,0 +1,1 @@
+Apply the swiftui-performance skill to explain lazy stack lifetime, identity, row-shape, prefetching, and geometry feedback performance risks.

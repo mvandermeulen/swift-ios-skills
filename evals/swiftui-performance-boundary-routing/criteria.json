@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether swiftui-performance stays focused and routes adjacent SwiftUI, telemetry, and navigation requests to sibling skills.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Performance ownership",
+      "description": "Keeps profiling, update fan-out, body cost, identity churn, lazy container behavior, image work, and representable update cost in swiftui-performance scope.",
+      "max_score": 25
+    },
+    {
+      "name": "Animation handoff",
+      "description": "Routes transition curves, timing, SymbolEffect, and animation API details to swiftui-animation when those are the primary issue.",
+      "max_score": 15
+    },
+    {
+      "name": "Navigation handoff",
+      "description": "Routes NavigationStack routing, modal routing, and deep-link behavior to swiftui-navigation.",
+      "max_score": 15
+    },
+    {
+      "name": "MetricKit handoff",
+      "description": "Routes MXDiagnosticPayload ingestion, subscribers, and production hang telemetry pipelines to metrickit while keeping Instruments capture in scope.",
+      "max_score": 15
+    },
+    {
+      "name": "Layout and architecture boundaries",
+      "description": "Routes general layout/container construction to swiftui-layout-components and broad state/composition architecture to swiftui-patterns unless directly tied to measured performance.",
+      "max_score": 15
+    },
+    {
+      "name": "No sibling implementations",
+      "description": "Does not provide full MetricKit, NavigationStack, or animation implementations while claiming to preserve boundaries.",
+      "max_score": 15
+    }
+  ]
+}
