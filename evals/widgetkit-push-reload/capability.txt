@@ -1,0 +1,1 @@
+Review WidgetKit push notification reload plans for widgets, including handler registration, APNs headers, budgets, and ActivityKit channel boundaries.

@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the WidgetKit skill corrects Control Center toggle implementation details and remote control reloads without drifting into generic App Intents or push-notification setup.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Toggle action protocol",
+      "description": "Requires the `ControlWidgetToggle` action to conform to `SetValueIntent` with a Boolean `value` parameter populated by the system, instead of using a parameterless `AppIntent`.",
+      "max_score": 24
+    },
+    {
+      "name": "State persistence timing",
+      "description": "Explains that the intent should apply and persist/cache the requested state before `perform()` returns so the control reload reads the correct value.",
+      "max_score": 16
+    },
+    {
+      "name": "Control push handler signature",
+      "description": "Uses `ControlPushHandler.pushTokensDidChange(controls: [ControlInfo])` and reads each configured control's push token through its optional push info.",
+      "max_score": 22
+    },
+    {
+      "name": "Control APNs contract",
+      "description": "Names the remote control reload APNs requirements: `apns-push-type: controls`, topic suffix `.push-type.controls`, and `aps.content-changed: true`.",
+      "max_score": 22
+    },
+    {
+      "name": "Reload semantics",
+      "description": "Treats remote control pushes as reload/invalidation signals that cause the value provider to fetch state, not as custom command payloads or direct intent invocations.",
+      "max_score": 16
+    }
+  ]
+}
