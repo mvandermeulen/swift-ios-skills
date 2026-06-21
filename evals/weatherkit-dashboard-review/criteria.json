@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether WeatherKit guidance catches over-fetching, stale caching assumptions, alert optionality, attribution, and availability boundaries.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Selective queries",
+      "description": "Recommends selective WeatherQuery requests such as current and alerts instead of fetching every dataset with weather(for:) for a narrow dashboard.",
+      "max_score": 10
+    },
+    {
+      "name": "No appearance over-fetching",
+      "description": "Rejects unconditional fetches on every view appearance and recommends a model, cache, refresh trigger, or location-keyed load strategy.",
+      "max_score": 10
+    },
+    {
+      "name": "Metadata expiration",
+      "description": "Uses WeatherMetadata.expirationDate for cache freshness rather than a fixed 10-minute or arbitrary staleness interval.",
+      "max_score": 10
+    },
+    {
+      "name": "Attribution placement",
+      "description": "Requires Apple Weather attribution where WeatherKit data appears, not only in a separate settings screen.",
+      "max_score": 10
+    },
+    {
+      "name": "Attribution assets",
+      "description": "Mentions WeatherService.attribution, the Apple Weather mark light/dark variants or legalPageURL/legalAttributionText.",
+      "max_score": 10
+    },
+    {
+      "name": "Alert details",
+      "description": "States WeatherAlert.detailsURL is non-optional and should be linked from alert UI for detail/attribution.",
+      "max_score": 10
+    },
+    {
+      "name": "Optional alert region",
+      "description": "Treats WeatherAlert.region as optional and uses a nil-safe fallback or omission.",
+      "max_score": 10
+    },
+    {
+      "name": "Availability scope",
+      "description": "Limits WeatherAvailability to alert and minute forecast availability instead of treating it as a broad support matrix.",
+      "max_score": 10
+    },
+    {
+      "name": "Project setup",
+      "description": "Mentions WeatherKit capability/App ID setup and location permission when device location is used.",
+      "max_score": 10
+    },
+    {
+      "name": "Measurement formatting",
+      "description": "Recommends locale-aware Measurement formatting for temperature instead of hardcoded weather strings.",
+      "max_score": 10
+    }
+  ]
+}

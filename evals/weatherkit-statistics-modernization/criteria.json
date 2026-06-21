@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether WeatherKit statistics guidance uses the current iOS 18+ variadic API shape and documented typed properties.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "iOS 18 availability",
+      "description": "States or gates WeatherKit statistics APIs as iOS 18+ or equivalent platform availability.",
+      "max_score": 10
+    },
+    {
+      "name": "Variadic queries",
+      "description": "Uses separate variadic query arguments such as including: .temperature, .precipitation rather than an array argument.",
+      "max_score": 10
+    },
+    {
+      "name": "Tuple return order",
+      "description": "Explains or demonstrates that tuple return order matches the including query order.",
+      "max_score": 10
+    },
+    {
+      "name": "Daily statistics method",
+      "description": "Uses WeatherService.dailyStatistics with a date interval or day range for daily historical statistics.",
+      "max_score": 10
+    },
+    {
+      "name": "Daily typed properties",
+      "description": "Uses documented daily statistics properties such as day, averageHighTemperature, averageLowTemperature, averagePrecipitationAmount, averageSnowfallAmount, or averagePrecipitationProbability.",
+      "max_score": 10
+    },
+    {
+      "name": "Monthly statistics method",
+      "description": "Includes a WeatherService.monthlyStatistics example for monthly historical statistics.",
+      "max_score": 10
+    },
+    {
+      "name": "Monthly typed properties",
+      "description": "Uses documented monthly statistics properties such as month, averageHighTemperature, averageLowTemperature, averagePrecipitationAmount, averageSnowfallAmount, or averagePrecipitationProbability.",
+      "max_score": 10
+    },
+    {
+      "name": "No stale statistics helper",
+      "description": "Does not use or recommend a statistics(for:) lookup or an undocumented mean property for these APIs.",
+      "max_score": 10
+    },
+    {
+      "name": "Collection iteration",
+      "description": "Treats DailyWeatherStatistics and MonthlyWeatherStatistics as typed collections that can be iterated or zipped.",
+      "max_score": 10
+    },
+    {
+      "name": "WeatherKit scope",
+      "description": "Keeps the answer focused on WeatherKit statistics modernization and does not drift into unrelated charting, persistence, or architecture work.",
+      "max_score": 10
+    }
+  ]
+}

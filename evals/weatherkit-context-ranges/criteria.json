@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether WeatherKit guidance covers iOS 18+ context queries, historical forecast ranges, and minute forecast availability safeguards.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Changes query",
+      "description": "Recommends WeatherQuery.changes for significant upcoming weather changes and treats the result as optional.",
+      "max_score": 10
+    },
+    {
+      "name": "Historical comparisons query",
+      "description": "Recommends WeatherQuery.historicalComparisons for comparing current weather to historical averages and treats the result as optional.",
+      "max_score": 10
+    },
+    {
+      "name": "iOS 18 context availability",
+      "description": "States or gates changes, historical comparisons, summaries, or statistics APIs as iOS 18+ or equivalent platform availability.",
+      "max_score": 10
+    },
+    {
+      "name": "Tomorrow forecast",
+      "description": "Uses a dated daily query or a current daily forecast day to get tomorrow's actual forecast rather than using minute forecast data.",
+      "max_score": 10
+    },
+    {
+      "name": "Historical forecast start",
+      "description": "States that daily and hourly date-range forecast history is available from August 1, 2021.",
+      "max_score": 10
+    },
+    {
+      "name": "Future range limit",
+      "description": "States that forecast ranges are available up to 10 days in the future.",
+      "max_score": 10
+    },
+    {
+      "name": "Per-request size limit",
+      "description": "States that a single request returns at most 10 daily days or about 240 hourly hours.",
+      "max_score": 10
+    },
+    {
+      "name": "Range boundaries",
+      "description": "Mentions startDate is inclusive and endDate is exclusive, or otherwise gives concrete start/end range validation.",
+      "max_score": 10
+    },
+    {
+      "name": "Minute availability",
+      "description": "Checks WeatherAvailability.minuteAvailability before relying on minute forecasts and handles Forecast<MinuteWeather>? as optional.",
+      "max_score": 10
+    },
+    {
+      "name": "No minute misuse",
+      "description": "Does not use minute forecasts for tomorrow or historical lookup because minute data is next-hour precipitation and region-limited.",
+      "max_score": 10
+    }
+  ]
+}
