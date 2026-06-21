@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether the Vision framework skill corrects modern Swift Vision APIs while preserving legacy VN, VisionKit, and Core ML sibling boundaries.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Modern versus legacy boundary",
+      "description": "Explains that new iOS 18+ Vision code should use Swift-native request and observation types with async `perform(on:)`, and keeps legacy `VN*` requests, handlers, conversion helpers, and method labels scoped to legacy code.",
+      "max_score": 14
+    },
+    {
+      "name": "Barcode and geometry types",
+      "description": "Uses `BarcodeSymbology` with `DetectBarcodesRequest`, stores modern observation bounds as `NormalizedRect`, and converts for display with `toImageCoordinates(_:origin:)` or equivalent modern geometry APIs rather than `VNImageRectForNormalizedRect`.",
+      "max_score": 14
+    },
+    {
+      "name": "Object tracking correction",
+      "description": "Seeds modern object tracking with `DetectedObjectObservation(boundingBox:)` or another bounding-box-providing observation and `TrackObjectRequest(detectedObject:)`, preserves the request across frames, and does not set `trackingLevel` on modern `TrackObjectRequest`.",
+      "max_score": 14
+    },
+    {
+      "name": "Instance mask correction",
+      "description": "Calls modern `InstanceMaskObservation.generateMask(for:)` and keeps legacy `generateMask(forInstances:)` or related `VNInstanceMaskObservation` methods out of modern snippets.",
+      "max_score": 10
+    },
+    {
+      "name": "Horizon and saliency result shapes",
+      "description": "Handles `DetectHorizonRequest` as returning one `HorizonObservation` with `angle: Measurement<UnitAngle>` and handles attention/objectness saliency requests as returning one `SaliencyImageObservation`, not arrays requiring `first`.",
+      "max_score": 16
+    },
+    {
+      "name": "VisionKit scanner boundary",
+      "description": "For `DataScannerViewController`, checks both `isSupported` and `isAvailable`, includes camera permission guidance, starts scanning after presentation, and keeps VisionKit barcode symbologies on the `VNBarcodeSymbology` side rather than replacing them with `BarcodeSymbology`.",
+      "max_score": 14
+    },
+    {
+      "name": "Core ML handoff",
+      "description": "Uses Vision only to run an already-prepared model through `CoreMLRequest` or `VNCoreMLRequest`, notes that `CoreMLRequest` result observations vary by model output shape when relevant, and routes conversion, profiling, optimization, deployment packaging, and lifecycle decisions to the `coreml` skill instead of expanding them.",
+      "max_score": 10
+    },
+    {
+      "name": "Output scope and evidence",
+      "description": "Provides concise corrected Swift snippets and review guidance without creating a project, inventing unsupported APIs, or broadening into unrelated sibling skills.",
+      "max_score": 8
+    }
+  ]
+}
