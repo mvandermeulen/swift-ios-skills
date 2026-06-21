@@ -223,15 +223,13 @@ let longPressBeforeDrag = LongPressGesture(minimumDuration: 0.5)
 
 ```swift
 let doubleTapOrLongPress = TapGesture(count: 2)
-    .map { ExclusiveResult.doubleTap }
     .exclusively(before:
         LongPressGesture()
-            .map { _ in ExclusiveResult.longPress }
     )
     .onEnded { result in
         switch result {
-        case .first(let val): handleDoubleTap()
-        case .second(let val): handleLongPress()
+        case .first(_): handleDoubleTap()
+        case .second(_): handleLongPress()
         }
     }
 ```
@@ -305,10 +303,10 @@ VStack {
 Control which gestures participate when using `.gesture(_:including:)`:
 
 ```swift
-.gesture(drag, including: .gesture)   // only this gesture, not subviews
-.gesture(drag, including: .subviews)  // only subview gestures
-.gesture(drag, including: .all)       // default: this + subviews
-.gesture(drag, including: .none)      // disable both
+.gesture(drag, including: .gesture)   // added gesture; disables subview gestures
+.gesture(drag, including: .subviews)  // subview gestures; disables added gesture
+.gesture(drag, including: .all)       // default: added + subview gestures
+.gesture(drag, including: .none)      // disables added + subview gestures
 ```
 
 ## Custom Gesture Protocol
@@ -318,29 +316,31 @@ Create reusable gestures by conforming to `Gesture`:
 ```swift
 struct SwipeGesture: Gesture {
     enum Direction { case left, right, up, down }
-    let minimumDistance: CGFloat
-    let onSwipe: (Direction) -> Void
+    typealias Value = Direction
 
-    init(minimumDistance: CGFloat = 50, onSwipe: @escaping (Direction) -> Void) {
+    let minimumDistance: CGFloat
+
+    init(minimumDistance: CGFloat = 50) {
         self.minimumDistance = minimumDistance
-        self.onSwipe = onSwipe
     }
 
-    var body: some Gesture {
-        DragGesture(minimumDistance: minimumDistance)
-            .onEnded { value in
-                let h = value.translation.width, v = value.translation.height
-                if abs(h) > abs(v) {
-                    onSwipe(h > 0 ? .right : .left)
-                } else {
-                    onSwipe(v > 0 ? .down : .up)
+    var body: AnyGesture<Direction> {
+        AnyGesture(
+            DragGesture(minimumDistance: minimumDistance)
+                .map { value in
+                    let h = value.translation.width, v = value.translation.height
+                    if abs(h) > abs(v) {
+                        return h > 0 ? .right : .left
+                    } else {
+                        return v > 0 ? .down : .up
+                    }
                 }
-            }
+        )
     }
 }
 
 // Usage
-Rectangle().gesture(SwipeGesture { print("Swiped \($0)") })
+Rectangle().gesture(SwipeGesture().onEnded { print("Swiped \($0)") })
 ```
 
 Wrap in a `View` extension for ergonomic API:
@@ -348,7 +348,7 @@ Wrap in a `View` extension for ergonomic API:
 ```swift
 extension View {
     func onSwipe(perform action: @escaping (SwipeGesture.Direction) -> Void) -> some View {
-        gesture(SwipeGesture(onSwipe: action))
+        gesture(SwipeGesture().onEnded(action))
     }
 }
 ```
@@ -474,7 +474,7 @@ has appropriate accessibility traits.
 - [ ] `onChanged` closures are lightweight — no heavy computation every frame
 - [ ] Composed gestures use correct combinator: `simultaneously`, `sequenced`, or `exclusively`
 - [ ] Persisted scale/rotation clamped to reasonable bounds in `onEnded`
-- [ ] Custom `Gesture` conformances use `var body: some Gesture` (not `View`)
+- [ ] Custom `Gesture` conformances return a gesture body; use `AnyGesture<Value>` when mapping to a custom `Value`
 - [ ] Gesture-driven animations use `.spring` or similar for natural deceleration
 - [ ] `GestureMask` considered when mixing gestures across view hierarchy levels
 - [ ] `onTapGesture` only used where `count > 1`, tap location, or coordinate space matters — plain single-tap actions use `Button` instead
