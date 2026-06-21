@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether swiftui-webkit corrects current WebPage navigation observation and callJavaScript usage without inventing unsupported event cases or unsafe JavaScript interpolation.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Throwing navigation sequence",
+      "description": "Requires `page.navigations` to be iterated with `for try await` and an error-handling path such as `do`/`catch`.",
+      "max_score": 20
+    },
+    {
+      "name": "Documented event model",
+      "description": "Does not use `.failed` or `.failedProvisionalNavigation` as `WebPage.NavigationEvent` cases, and instead handles navigation failure through the thrown error or `WebPage.NavigationError` path.",
+      "max_score": 25
+    },
+    {
+      "name": "JavaScript function body",
+      "description": "Explains that `callJavaScript` expects a JavaScript function body rather than a function declaration followed by a separate call expression.",
+      "max_score": 20
+    },
+    {
+      "name": "Argument passing",
+      "description": "Recommends passing `sectionID` through the `arguments` dictionary instead of interpolating it into the JavaScript source.",
+      "max_score": 20
+    },
+    {
+      "name": "Result handling",
+      "description": "Mentions defensive result casting and explicitly accounts for absent or JavaScript null results such as `nil` or `NSNull`.",
+      "max_score": 15
+    }
+  ]
+}
