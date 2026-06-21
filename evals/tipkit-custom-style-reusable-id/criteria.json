@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent catches TipKit reusable identity, style configuration, action, event, and invalidation mistakes.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Reusable identity",
+      "description": "Says a reusable tip should override `id` with a stable content-derived identifier rather than using the default type-name ID for every instance.",
+      "max_score": 20
+    },
+    {
+      "name": "Style configuration",
+      "description": "Uses `TipViewStyle.Configuration` values such as image, title, message, actions, and tip instead of rendering from a captured concrete tip instance.",
+      "max_score": 20
+    },
+    {
+      "name": "Action rendering",
+      "description": "Calls `action.label()` and invokes the action handler correctly inside custom style buttons.",
+      "max_score": 15
+    },
+    {
+      "name": "Event payloads",
+      "description": "Keeps `Tips.Event<DonationInfo>` payloads small and `Codable`/`Sendable`, or uses no payload when counts are enough, rather than storing large app models.",
+      "max_score": 20
+    },
+    {
+      "name": "Invalidation",
+      "description": "Invalidates the specific tip with an appropriate reason when the user performs the discovered action or explicitly closes the tip.",
+      "max_score": 15
+    },
+    {
+      "name": "Scope control",
+      "description": "Avoids unrelated SwiftUI layout, navigation, or branding advice that does not address the TipKit plan.",
+      "max_score": 10
+    }
+  ]
+}
