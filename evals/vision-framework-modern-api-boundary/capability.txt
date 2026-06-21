@@ -1,0 +1,1 @@
+Correct modern Vision framework API usage and preserve boundaries with legacy VN APIs, VisionKit scanning, and Core ML model lifecycle guidance.
