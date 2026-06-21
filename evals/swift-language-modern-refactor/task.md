@@ -10,6 +10,8 @@ Create `swift-helper-modernization.md` containing:
 
 - A corrected Swift implementation.
 - A short explanation of the language-level changes made.
+- Keep the explanation consistent with the implementation; avoid separate
+  pseudo-code condition snippets that can drift from the corrected code.
 - Any compatibility note needed for current Swift language features.
 
 ## Starting Code

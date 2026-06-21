@@ -9,8 +9,13 @@ A maintainer is triaging cleanup requests before creating work items for a small
 Create `swift-cleanup-routing.md` containing:
 
 - A brief owner/domain for each cleanup item.
+- Use precise Swift type-system terminology for the `some`, `any`, and `Never`
+  decision, not just example code.
 - Minimal examples are acceptable for handoffs, but avoid turning sibling-owned
   work into full implementations.
+- For sibling-owned concerns, name the owner skill and a brief reason. Concise
+  API hints are acceptable, but do not provide pipelines, matrices, or mini
+  review checklists.
 - Clear handoff guidance for sibling domains.
 
 ## Cleanup Items
