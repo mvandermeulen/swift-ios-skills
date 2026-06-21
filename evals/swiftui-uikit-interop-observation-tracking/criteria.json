@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent uses current UIKit automatic observation tracking instead of manual withObservationTracking polling in mixed UIKit/SwiftUI apps.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Rejects polling",
+      "description": "Removes or rejects a Task loop, Task.sleep(for: .zero), or repeated manual withObservationTracking registration for UI refresh.",
+      "max_score": 20
+    },
+    {
+      "name": "Uses UIKit automatic tracking",
+      "description": "Uses UIKit automatic observation tracking through updateProperties, layoutSubviews, view-controller layout hooks, or configuration update handlers for @Observable reads.",
+      "max_score": 25
+    },
+    {
+      "name": "Scopes observed reads",
+      "description": "Places non-layout UI reads in updateProperties or equivalent content update hooks, and routes geometry-affecting reads to layout hooks.",
+      "max_score": 15
+    },
+    {
+      "name": "iOS 18 and iOS 26 availability",
+      "description": "States that UIObservationTrackingEnabled is required on iOS 18 and not required on iOS 26 and later.",
+      "max_score": 20
+    },
+    {
+      "name": "Legacy fallback",
+      "description": "Mentions Combine/objectWillChange or equivalent explicit invalidation as the fallback for iOS 15-16 or existing ObservableObject models.",
+      "max_score": 15
+    },
+    {
+      "name": "Interop framing",
+      "description": "Frames the guidance as UIKit participating in shared app state rather than forcing the screen to become all SwiftUI.",
+      "max_score": 5
+    }
+  ]
+}

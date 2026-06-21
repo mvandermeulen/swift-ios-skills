@@ -1,0 +1,1 @@
+Review SwiftUI UIViewRepresentable coordinator lifecycle, delegate placement, and state synchronization for UIKit wrappers.
