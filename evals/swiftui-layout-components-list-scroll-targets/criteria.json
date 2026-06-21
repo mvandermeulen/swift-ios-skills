@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether SwiftUI layout guidance handles List settings defaults while recognizing scroll-target and dynamic row-height gotchas.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Preserves settings defaults",
+      "description": "Explicitly starts from List or Form as the default for straightforward settings rows where native row semantics, grouping, accessibility, and platform styling matter, before discussing exceptions.",
+      "max_score": 10
+    },
+    {
+      "name": "Separates scroll cases",
+      "description": "Explicitly distinguishes simple edge scroll actions, such as top or bottom scrolling, from reliable direct section or item jump behavior.",
+      "max_score": 15
+    },
+    {
+      "name": "Recommends custom scroll target layout",
+      "description": "In the jump-control recommendation itself, recommends ScrollView plus LazyVStack with scrollTargetLayout for reliable section or item jump behavior when direct jumps are a core requirement; later constraint or performance notes alone are not enough for full credit.",
+      "max_score": 20
+    },
+    {
+      "name": "Section header target caveat",
+      "description": "Warns not to assume List section headers are reliable scroll targets.",
+      "max_score": 10
+    },
+    {
+      "name": "Dynamic row height gotcha",
+      "description": "Calls out that dynamically changing List row heights can cause visually abrupt changes, such as snapping, jumping, or not smoothly interpolating, and connects that risk to container choice. Do not require those exact words if the answer clearly describes the same behavior.",
+      "max_score": 15
+    },
+    {
+      "name": "Layout scoped caveat",
+      "description": "Keeps the dynamic row-height issue framed as a layout/container decision; does not include animation modifier examples, transition recipes, spring parameters, timing values, or animation-tuning recommendations.",
+      "max_score": 10
+    },
+    {
+      "name": "Stable identity",
+      "description": "Requires stable Identifiable IDs for sections and rows and avoids array-index IDs for scroll positioning and diffing.",
+      "max_score": 10
+    },
+    {
+      "name": "No full implementation",
+      "description": "Does not write a full app, concrete Swift view/component implementation, or expandable-row code sample; any examples remain brief API mentions tied to the layout decision.",
+      "max_score": 10
+    }
+  ]
+}
