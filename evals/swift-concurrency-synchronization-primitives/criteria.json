@@ -4,27 +4,27 @@
   "checklist": [
     {
       "name": "Actors",
-      "description": "Uses actors for shared mutable state when asynchronous access and actor hops are acceptable.",
+      "description": "Full credit requires stating actors are preferred for async shared mutable state when callers can suspend, explaining outside access requires async actor hops and reentrancy care, and explicitly rejecting an actor for the synchronous C callback metrics counter because callbacks cannot suspend.",
       "max_score": 20
     },
     {
       "name": "Mutex vs OSAllocatedUnfairLock",
-      "description": "Uses Mutex for new iOS 18+ code and OSAllocatedUnfairLock for iOS 16-17 support or ownership-assertion needs.",
+      "description": "Full credit requires preferring Mutex<Value> for new iOS 18+ protected state, using OSAllocatedUnfairLock<State> for iOS 16-17 support or ownership assertions, and describing the iOS 16-26 deployment plan as either an iOS 16-compatible lock or a runtime if #available(iOS 18, *) branch.",
       "max_score": 25
     },
     {
       "name": "Atomic Scalars",
-      "description": "Uses Atomic for simple scalar counters or flags when appropriate.",
+      "description": "Full credit requires recommending Atomic for independent scalar counters or flags, including the C callback metrics counter on iOS 18+, noting relaxed ordering is only appropriate for standalone metrics, and choosing a lock instead for iOS 16-17 support or compound state.",
       "max_score": 15
     },
     {
       "name": "Lock Anti-Patterns",
-      "description": "Rejects locks inside actors and rejects holding any lock across await suspension points.",
+      "description": "Full credit requires rejecting any lock inside an actor as double synchronization, rejecting any blocking lock held across await, and saying async work should happen outside the critical section so withLock closures remain synchronous and non-suspending.",
       "max_score": 25
     },
     {
       "name": "NSLock Accuracy",
-      "description": "Corrects the claim that NSLock is not Sendable while still preferring modern state-protecting primitives for new Swift concurrency code.",
+      "description": "Full credit requires correcting the stale claim by saying NSLock is Sendable on Apple platforms and should not be banned for that reason, while still preferring Mutex or OSAllocatedUnfairLock for new Swift concurrency code because they make protected state and ownership clearer.",
       "max_score": 15
     }
   ]

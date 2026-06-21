@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether swift-concurrency gates Swift 6.4 cleanup APIs correctly and handles the Xcode 26.5 nonisolated(nonsending) explicit-capture closure workaround.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Async Defer Availability",
+      "description": "States that async defer is a Swift 6.4 / Xcode 27 beta-era feature and should not be presented as available to Swift 6.3 / Xcode 26.5 projects.",
+      "max_score": 25
+    },
+    {
+      "name": "Cancellation Shield Availability",
+      "description": "States that withTaskCancellationShield is a Swift 6.4 / iOS 27+ beta-era API and should be used only for short cleanup or rollback, not ordinary cancelable work.",
+      "max_score": 25
+    },
+    {
+      "name": "Async Defer Cancellation Semantics",
+      "description": "Explains that async defer cleanup still observes task cancellation unless a cancellation shield is deliberately used.",
+      "max_score": 20
+    },
+    {
+      "name": "Explicit Capture Workarounds",
+      "description": "For the Xcode 26.5 explicit-capture closure issue, recommends only the documented workarounds: remove explicit captures when safe, or use a local @Sendable nonisolated(nonsending) async function.",
+      "max_score": 20
+    },
+    {
+      "name": "Scope Control",
+      "description": "Avoids retargeting the whole project or broad skill guidance to Swift 6.4 / Xcode 27.",
+      "max_score": 10
+    }
+  ]
+}
