@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent applies swiftui-patterns state ownership and actor-isolation guidance without overgeneralizing.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Nuanced main actor isolation",
+      "description": "Uses `@MainActor` for UI-bound observable stores or view models, but does not require every observable or DTO/domain model to be main-actor isolated.",
+      "max_score": 20
+    },
+    {
+      "name": "Correct ownership wrapper",
+      "description": "Uses `@State` in the owning SwiftUI view for the observable store lifecycle.",
+      "max_score": 15
+    },
+    {
+      "name": "Bindable only for bindings",
+      "description": "Uses `@Bindable` in child views or local environment variables only when `$property` bindings are needed.",
+      "max_score": 15
+    },
+    {
+      "name": "Environment routing",
+      "description": "Uses type-keyed `@Environment(ProfileSettingsStore.self)` for deeply shared observable state instead of legacy `@EnvironmentObject`.",
+      "max_score": 15
+    },
+    {
+      "name": "Async task lifecycle",
+      "description": "Uses `.task` or `.task(id:)` for suggestion loading and mentions automatic cancellation when the view disappears or the task id changes.",
+      "max_score": 15
+    },
+    {
+      "name": "AppStorage caveat",
+      "description": "Avoids `@AppStorage` inside the observable store for view reactivity; recommends view-level `@AppStorage` or normal UserDefaults-backed stored properties in the store.",
+      "max_score": 20
+    }
+  ]
+}
