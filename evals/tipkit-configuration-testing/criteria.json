@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent corrects TipKit configuration timing, testing overrides, and first-launch display policy.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "App initialization",
+      "description": "States that `Tips.configure(_:)` should run once during app initialization before any tips display, not from `ContentView.task`, `onAppear`, or another view lifecycle hook.",
+      "max_score": 20
+    },
+    {
+      "name": "Reset ordering",
+      "description": "States that `Tips.resetDatastore()` must run before `Tips.configure(_:)` and should be limited to debug, preview, or test setup.",
+      "max_score": 15
+    },
+    {
+      "name": "Production override safety",
+      "description": "Rejects shipping `showAllTipsForTesting()` or related testing overrides behind a production runtime flag.",
+      "max_score": 15
+    },
+    {
+      "name": "UI test launch arguments",
+      "description": "Uses built-in TipKit launch arguments or debug-gated custom launch arguments before `XCUIApplication.launch()`.",
+      "max_score": 15
+    },
+    {
+      "name": "Display policy",
+      "description": "Recommends rules, sensible display frequency, display limits, and invalidation instead of forcing every tip to appear immediately on first launch.",
+      "max_score": 25
+    },
+    {
+      "name": "Scope control",
+      "description": "Keeps the answer focused on TipKit setup and testing rather than drifting into unrelated SwiftUI navigation or general onboarding design.",
+      "max_score": 10
+    }
+  ]
+}

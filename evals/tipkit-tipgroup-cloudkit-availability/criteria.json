@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent separates iOS 17 core TipKit from iOS 18+ TipGroup, CloudKit sync, and duration APIs.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Availability split",
+      "description": "Marks `TipGroup`, `.cloudKitContainer(...)`, `.automatic`, and `MaxDisplayDuration` as iOS 18+ rather than treating all TipKit APIs as iOS 17 core APIs.",
+      "max_score": 20
+    },
+    {
+      "name": "iOS 17 fallback",
+      "description": "Suggests availability gates, an iOS 17 fallback using rules/events/parameters and explicit invalidation, custom synced state, or raising the minimum OS.",
+      "max_score": 15
+    },
+    {
+      "name": "TipGroup priority",
+      "description": "States that plain `TipGroup` defaults to `.firstAvailable` and that `TipGroup(.ordered)` is the iOS 18+ sequence mode where later tips wait for previous tips to be invalidated.",
+      "max_score": 20
+    },
+    {
+      "name": "CloudKit setup",
+      "description": "Mentions required setup for TipKit CloudKit sync, including iCloud with CloudKit and Background Modes > Remote notifications.",
+      "max_score": 15
+    },
+    {
+      "name": "Container choice",
+      "description": "Recommends an intentional CloudKit container choice, preferably a dedicated `.tips` container, and explains `.automatic` selection risk.",
+      "max_score": 15
+    },
+    {
+      "name": "Duration semantics",
+      "description": "Explains that `MaxDisplayDuration(300)` is iOS 18+, cumulative display time, and not a substitute for explicit invalidation of sequence steps.",
+      "max_score": 15
+    }
+  ]
+}
