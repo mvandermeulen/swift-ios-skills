@@ -1,0 +1,1 @@
+Choose the right Apple web container for SwiftUI apps, separating WebView/WebPage, SFSafariViewController, ASWebAuthenticationSession, openURL, and WKWebView fallback boundaries.

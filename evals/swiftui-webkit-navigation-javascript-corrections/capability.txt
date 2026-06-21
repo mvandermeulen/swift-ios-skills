@@ -1,0 +1,1 @@
+Review SwiftUI WebKit navigation observation and JavaScript integration for iOS 26+ apps, correcting API misuse while preserving focused embedded-web scope.

@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether swiftui-webkit keeps embedded web content, Safari-style browsing, OAuth, platform browse-out behavior, and WKWebView fallback boundaries separate.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Embedded WebKit default",
+      "description": "Uses `WebView` with `WebPage` for app-owned embedded content that needs page state, JavaScript, navigation policy, loading control, or custom URL scheme resources.",
+      "max_score": 25
+    },
+    {
+      "name": "Authentication boundary",
+      "description": "Uses `ASWebAuthenticationSession` for GitHub OAuth and explicitly avoids implementing OAuth in embedded `WebView`, `WKWebView`, or `SFSafariViewController`.",
+      "max_score": 25
+    },
+    {
+      "name": "Safari-style browsing boundary",
+      "description": "Limits `SFSafariViewController` to iOS/iPadOS Safari-style modal browsing for external sites when the app does not need content interaction or customization.",
+      "max_score": 20
+    },
+    {
+      "name": "macOS and visionOS browse-out",
+      "description": "Routes macOS and visionOS external browse-out behavior to `openURL` or the platform default browser rather than presenting `SFSafariViewController` as the cross-platform solution.",
+      "max_score": 15
+    },
+    {
+      "name": "WKWebView fallback",
+      "description": "Keeps `WKWebView` only as an explicit fallback for back-deployment or a required capability not covered by the SwiftUI-facing WebKit API.",
+      "max_score": 15
+    }
+  ]
+}
