@@ -1,0 +1,1 @@
+Correct WidgetKit Control Center toggle and remote control reload designs, including `SetValueIntent`, `ControlPushHandler`, and controls APNs headers.

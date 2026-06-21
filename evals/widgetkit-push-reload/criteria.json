@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the WidgetKit skill corrects server-driven widget push reload designs without confusing WidgetKit pushes with ActivityKit broadcast channels or generic notification registration.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Handler registration",
+      "description": "States that `WidgetPushHandler` is registered on the widget's `WidgetConfiguration` with `.pushHandler(...)`, and that the handler type must be available to the widget extension or shared code rather than only the app target.",
+      "max_score": 20
+    },
+    {
+      "name": "Widget push setup",
+      "description": "Mentions adding Push Notifications capability to the widget extension and using WidgetKit push tokens rather than User Notifications registration for the widget.",
+      "max_score": 18
+    },
+    {
+      "name": "Widget APNs contract",
+      "description": "Names the WidgetKit APNs requirements: `apns-push-type: widgets`, topic suffix `.push-type.widgets`, and an `aps` payload with `content-changed: true`.",
+      "max_score": 22
+    },
+    {
+      "name": "Timeline and budget behavior",
+      "description": "Explains that WidgetKit pushes are budgeted/opportunistic reload signals that supplement timelines; the timeline provider and reload policy remain the source of displayed entries and fallback freshness.",
+      "max_score": 25
+    },
+    {
+      "name": "Broadcast channel boundary",
+      "description": "Rejects APNs broadcast channels as a WidgetKit timeline update mechanism and keeps ActivityKit broadcast-channel details out of the widget push design except as a boundary.",
+      "max_score": 15
+    }
+  ]
+}

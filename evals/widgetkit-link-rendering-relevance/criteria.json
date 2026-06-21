@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the WidgetKit skill fixes deep-link, rendering, and relevance claims while keeping adjacent ActivityKit and App Intents domains bounded.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Small widget links",
+      "description": "Corrects that `Link` is supported in `.systemSmall`, `.accessoryRectangular`, and larger system widget families, and uses one `widgetURL(_:)` only as the general surface/fallback URL.",
+      "max_score": 24
+    },
+    {
+      "name": "Liquid Glass workflow",
+      "description": "Frames Liquid Glass and accented rendering around `@Environment(\\.widgetRenderingMode)`, `.widgetAccentable()`, and selective `Image.widgetAccentedRenderingMode(_:)`, not a single global enum case.",
+      "max_score": 24
+    },
+    {
+      "name": "Invalid relevance initializer",
+      "description": "Rejects `WidgetRelevance(intent, score:)` as invalid and avoids presenting it as a current API.",
+      "max_score": 16
+    },
+    {
+      "name": "Platform-specific relevance",
+      "description": "Distinguishes iPhone/iPad Smart Stack guidance using `TimelineEntryRelevance` and intent donation from watchOS contextual relevance using `WidgetRelevance([WidgetRelevanceAttribute(...)])`.",
+      "max_score": 24
+    },
+    {
+      "name": "Sibling boundaries",
+      "description": "Keeps ActivityKit and generic App Intents details limited to handoff/boundary notes rather than expanding into full sibling-skill guidance.",
+      "max_score": 12
+    }
+  ]
+}
