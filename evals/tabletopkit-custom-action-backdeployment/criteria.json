@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the TabletopKit skill prevents agents from backdeploying custom actions and custom equipment state to older visionOS releases.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "CustomAction availability",
+      "description": "States that CustomAction is visionOS 26.0+ and must not be treated as available on visionOS 2.0 or 2.2.",
+      "max_score": 15
+    },
+    {
+      "name": "Custom state availability",
+      "description": "States that CustomEquipmentState is visionOS 26.0+ and should be gated or avoided for visionOS 2.x support.",
+      "max_score": 12
+    },
+    {
+      "name": "Registration requirement",
+      "description": "Explains that custom actions must be registered with TableSetup.register(action:) before use on the visionOS 26.0+ custom-action path.",
+      "max_score": 12
+    },
+    {
+      "name": "Action dispatch gate",
+      "description": "Gates TabletopAction.customAction and direct TabletopGame.addAction(customAction) usage to visionOS 26.0+.",
+      "max_score": 10
+    },
+    {
+      "name": "Backdeployment fallback",
+      "description": "Provides a visionOS 2.x-compatible fallback using built-in TabletopAction flows, raw value/card/die state, or another TabletopKit-supported state representation.",
+      "max_score": 12
+    },
+    {
+      "name": "Determinism",
+      "description": "Keeps custom action payloads deterministic, Codable/Sendable where applicable, and free of local-only side effects that would desynchronize multiplayer state.",
+      "max_score": 12
+    },
+    {
+      "name": "Observer handling",
+      "description": "Mentions handling accepted and discarded actions, including actionWasDiscarded where available, instead of assuming every submitted action applies.",
+      "max_score": 8
+    },
+    {
+      "name": "Interaction API availability",
+      "description": "Distinguishes TabletopInteraction.Configuration as visionOS 2.2+ and avoids deprecated interaction configuration APIs.",
+      "max_score": 8
+    },
+    {
+      "name": "Synchronization wording",
+      "description": "Says TabletopKit synchronizes resulting game actions/state through the intended multiplayer path rather than promising arbitrary local side effects are automatically serialized.",
+      "max_score": 6
+    },
+    {
+      "name": "Migration checklist",
+      "description": "Includes a checklist or review notes that clearly separates visionOS 2.x support work from visionOS 26-only enhancements.",
+      "max_score": 5
+    }
+  ]
+}
