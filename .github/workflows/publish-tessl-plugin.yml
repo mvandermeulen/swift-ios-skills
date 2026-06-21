@@ -17,4 +17,15 @@ jobs:
       - uses: tesslio/setup-tessl@v2
         with:
           token: ${{ secrets.TESSL_TOKEN }}
-      - run: tessl plugin publish .
+      - name: Publish Tessl plugin
+        run: |
+          set -euo pipefail
+          plugin="$(jq -r '.name' .tessl-plugin/plugin.json)"
+          version="$(jq -r '.version' .tessl-plugin/plugin.json)"
+
+          if tessl plugin publish .; then
+            exit 0
+          fi
+
+          echo "::warning::Publish command failed; checking whether ${plugin}@${version} exists in the registry."
+          tessl plugin info "${plugin}@${version}"
