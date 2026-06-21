@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether SwiftUI performance guidance uses current Instruments terminology and produces targeted remediation for a realistic janky feed.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Release-device profiling",
+      "description": "Recommends profiling a Release build on a real device when possible and reproducing the exact scroll interaction.",
+      "max_score": 15
+    },
+    {
+      "name": "Current SwiftUI lanes",
+      "description": "Names current SwiftUI Instrument surfaces such as Update Groups, Long View Body Updates, Long Representable Updates or Representable Updates, Other Long Updates or Other Updates, and Cause & Effect Graph.",
+      "max_score": 20
+    },
+    {
+      "name": "Profiler correlation",
+      "description": "Explains when to correlate SwiftUI lanes with Time Profiler and Hangs or Hitches rather than relying only on visual smoothness.",
+      "max_score": 15
+    },
+    {
+      "name": "Body work targets",
+      "description": "Flags row subtitle formatting, badge filtering, and thumbnail decoding as body or row hot-path work to move, cache, or precompute.",
+      "max_score": 15
+    },
+    {
+      "name": "Representable work",
+      "description": "Connects the UIKit video preview to representable or platform-view update cost and recommends auditing idempotent update work.",
+      "max_score": 15
+    },
+    {
+      "name": "Focused scope",
+      "description": "Keeps the answer focused on measured runtime performance and avoids a full app architecture rewrite or unrelated navigation/animation work.",
+      "max_score": 20
+    }
+  ]
+}

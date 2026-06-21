@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether SwiftUI performance guidance reflects current lazy stack behavior and avoids stale claims that offscreen lazy rows always remain alive.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Lazy lifetime accuracy",
+      "description": "States that offscreen lazy-stack views can be removed and later deleted with view-local state, rather than promising they remain alive indefinitely.",
+      "max_score": 20
+    },
+    {
+      "name": "Durable state placement",
+      "description": "Recommends moving draft or durable row state outside the row view when it must survive scrolling away.",
+      "max_score": 15
+    },
+    {
+      "name": "Data-level filtering",
+      "description": "Recommends filtering data before ForEach instead of returning zero or one top-level row from each element with an if branch.",
+      "max_score": 15
+    },
+    {
+      "name": "Constant row shape",
+      "description": "Requires stable identity and a constant number of top-level subviews per ForEach element, with wrapping if needed.",
+      "max_score": 15
+    },
+    {
+      "name": "Scroll estimate caveat",
+      "description": "Warns that lazy stacks estimate offscreen sizes, so absolute content-size or offset assumptions can shift during programmatic scrolling.",
+      "max_score": 15
+    },
+    {
+      "name": "Geometry feedback",
+      "description": "Flags geometry updates feeding shared state as a layout feedback risk and recommends stable sizing, layout primitives, custom Layout, or thresholded narrow geometry updates.",
+      "max_score": 15
+    },
+    {
+      "name": "Prefetch nuance",
+      "description": "Does not rely on onAppear as the first setup point; mentions body or layout may run before onAppear because of prefetching.",
+      "max_score": 5
+    }
+  ]
+}

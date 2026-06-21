@@ -1,0 +1,1 @@
+Apply the swiftui-performance skill to diagnose SwiftUI runtime performance using current Instruments guidance, then recommend focused remediation for measured hot paths.

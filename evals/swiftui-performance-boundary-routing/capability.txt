@@ -1,0 +1,1 @@
+Apply the swiftui-performance skill while preserving sibling boundaries for animation, navigation, MetricKit, layout, and broader SwiftUI architecture.
