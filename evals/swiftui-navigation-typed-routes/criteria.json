@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent corrects SwiftUI NavigationStack routing guidance for typed app routes and per-tab history.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Rejects NavigationPath as type-safe default",
+      "description": "Explicitly corrects the claim that NavigationPath is the type-safe default for homogeneous app-owned route enums.",
+      "max_score": 20
+    },
+    {
+      "name": "Uses typed route path",
+      "description": "Recommends a typed [Route] path or equivalent Hashable route enum for normal app-owned destinations.",
+      "max_score": 25
+    },
+    {
+      "name": "Reserves NavigationPath",
+      "description": "Explains that NavigationPath is appropriate when a stack must contain heterogeneous route value types.",
+      "max_score": 15
+    },
+    {
+      "name": "Preserves per-tab history",
+      "description": "Requires each tab to have its own NavigationStack path or router rather than sharing and resetting one global path.",
+      "max_score": 25
+    },
+    {
+      "name": "Stores lightweight route data",
+      "description": "Stores stable identifiers or lightweight Hashable route data rather than view instances or heavy model objects.",
+      "max_score": 15
+    }
+  ]
+}

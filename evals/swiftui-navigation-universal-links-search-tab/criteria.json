@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent separates SwiftUI URL handling from Handoff and describes iOS 26 search-tab behavior accurately.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Uses onOpenURL",
+      "description": "Uses .onOpenURL as the SwiftUI hook for Universal Links and custom URL schemes.",
+      "max_score": 25
+    },
+    {
+      "name": "Separates Handoff",
+      "description": "Reserves .onContinueUserActivity for Handoff or other declared NSUserActivity types rather than the primary Universal Link path.",
+      "max_score": 20
+    },
+    {
+      "name": "Corrects AASA cache guidance",
+      "description": "Replaces fixed 24-48 hour propagation guidance with CDN-backed retrieval, install-time download, roughly weekly device rechecks, no direct CDN invalidation, and developer mode for testing.",
+      "max_score": 25
+    },
+    {
+      "name": "Describes search tab role",
+      "description": "Describes Tab(value:role:) with .search as marking a dedicated search tab with system default title, icon, and pinning behavior.",
+      "max_score": 15
+    },
+    {
+      "name": "Mentions search activation",
+      "description": "Mentions tabViewSearchActivation(_:) when selection should control search activation and does not say the API replaces the tab bar with a search field.",
+      "max_score": 15
+    }
+  ]
+}
