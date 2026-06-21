@@ -2,9 +2,12 @@
 
 ## Unreleased
 
+## v3.6.0
+
 ### Repository
 
 - Migrate Tessl packaging from deprecated root `tile.json` to `.tessl-plugin/plugin.json`; keep the same 84-skill bundle via explicit skill paths and retain `README.md` as the external public catalog.
+- Update the release workflow to publish the Tessl plugin package instead of the deprecated tile package.
 
 ### Skill updates
 

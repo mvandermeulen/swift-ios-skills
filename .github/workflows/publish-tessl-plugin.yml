@@ -1,4 +1,4 @@
-name: Publish Tessl Tile
+name: Publish Tessl Plugin
 
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
       - uses: tesslio/setup-tessl@v2
         with:
           token: ${{ secrets.TESSL_TOKEN }}
-      - run: tessl tile publish
+      - run: tessl plugin publish .
