@@ -1,40 +1,50 @@
 {
-  "context": "Tests whether Swift Testing migration guidance corrects XCTestCase, fixture, availability, assertion, and UI-test boundary mistakes.",
+  "context": "Tests whether Swift Testing migration guidance corrects XCTestCase, fixture, availability, assertion, UI-test boundary, and Xcode 27/SwiftPM interoperability mistakes.",
   "type": "weighted_checklist",
   "checklist": [
     {
       "name": "No XCTestCase inheritance",
       "description": "Rejects keeping XCTestCase inheritance for migrated Swift Testing unit tests and uses @Test functions or suites instead.",
-      "max_score": 15
+      "max_score": 10
     },
     {
       "name": "Isolated fixtures",
       "description": "Recommends per-test fixture setup using suite init, local helpers, actors, or other isolated fixtures instead of shared singleton mutable state.",
-      "max_score": 15
+      "max_score": 10
     },
     {
       "name": "Availability placement",
       "description": "States that @available belongs on individual @Test functions, not on suite types or containing types.",
-      "max_score": 15
+      "max_score": 10
     },
     {
       "name": "Assertion migration",
       "description": "Explains that not every XCTest assertion should become #expect and uses #require for required values or unwraps.",
-      "max_score": 15
+      "max_score": 12
     },
     {
       "name": "Manual issue recording",
       "description": "Maps unconditional manual failures such as XCTFail to Issue.record when that case is discussed.",
-      "max_score": 10
+      "max_score": 8
     },
     {
       "name": "UI-test boundary",
       "description": "Keeps XCUITest UI automation on XCTest rather than claiming Swift Testing replaces XCTest everywhere.",
-      "max_score": 15
+      "max_score": 10
     },
     {
       "name": "Coexistence",
       "description": "States that XCTest and Swift Testing can coexist during migration while recommending clear file or target organization when it reduces confusion.",
+      "max_score": 10
+    },
+    {
+      "name": "Interop mode guidance",
+      "description": "Explains Xcode 27-era interoperability modes, distinguishes pre-Xcode 27 inherited limited mode from new Xcode 27 complete mode, prefers complete or strict mode during migration, and mentions SwiftPM's SWIFT_TESTING_XCTEST_INTEROP_MODE when relevant.",
+      "max_score": 15
+    },
+    {
+      "name": "No over-broad cross-framework ban",
+      "description": "Avoids claiming cross-framework APIs are categorically forbidden while still recommending native Swift Testing APIs for new Swift Testing tests.",
       "max_score": 15
     }
   ]
