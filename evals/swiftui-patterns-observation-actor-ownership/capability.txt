@@ -1,0 +1,1 @@
+SwiftUI Observation state ownership and actor-isolation guidance

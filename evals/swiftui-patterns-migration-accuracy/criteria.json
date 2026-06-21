@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent corrects overconfident SwiftUI migration claims using the scoped swiftui-patterns guidance.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Actor isolation nuance",
+      "description": "Narrows `@MainActor` guidance to UI-bound observable stores/view models and avoids a universal rule for every `@Observable` type.",
+      "max_score": 15
+    },
+    {
+      "name": "Color bridge correction",
+      "description": "States that `Color(uiColor:)` remains valid for bridging existing UIKit colors and is not replaced by shader libraries.",
+      "max_score": 15
+    },
+    {
+      "name": "Clipboard modifier availability",
+      "description": "Does not recommend `.copyable`, `.cuttable`, or command-based `.pasteDestination(for:action:validator:)` as iOS 16 or iOS 26 defaults; for these command modifiers, current Apple docs list macOS 13+ and iOS/iPadOS/Mac Catalyst 27.0+ beta, so iOS 26 guidance should use `UIPasteboard`, drag/drop, or `ShareLink` instead.",
+      "max_score": 20
+    },
+    {
+      "name": "Matched transition availability",
+      "description": "Corrects `matchedTransitionSource` and `navigationTransition(.zoom)` availability to iOS 18+.",
+      "max_score": 15
+    },
+    {
+      "name": "Preview wording",
+      "description": "Treats `#Preview` as the modern default without falsely claiming all `PreviewProvider` usage is compiler-deprecated.",
+      "max_score": 15
+    },
+    {
+      "name": "List action nuance",
+      "description": "Treats `EditButton`, `.onDelete`, and `.onMove` as valid for edit-mode list workflows while recommending `.swipeActions` for contextual row actions.",
+      "max_score": 20
+    }
+  ]
+}
