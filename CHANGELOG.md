@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## v3.6.1
+
+### Skill updates
+
+- Fix the `core-bluetooth` SwiftUI BLE reference sample so it compiles under Swift 6.3 strict concurrency by keeping delegate callbacks on the `@MainActor` view model when using Core Bluetooth's main-queue `queue: nil` delivery, avoiding `nonisolated` delegate methods that capture non-Sendable Core Bluetooth objects inside `Task { @MainActor }`.
+
 ## v3.6.0
 
 ### Repository
